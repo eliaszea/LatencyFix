@@ -5,18 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="LatencyFix is the first plugin to automate latency compensation across studio, live, and remote audio workflows. Built for sound engineers, producers, and live technicians." />
   <title>LatencyFix – Real-Time Audio Sync for Remote Collaboration</title>
-  <link rel="stylesheet" href="styles.css" />
   <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #fff;
+      --secondary-color: #bbb;
+      --section-bg: #1b1b1b;
+      --button-bg: #00f3a0;
+      --button-text: #000;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-color: #f7f7f7;
+        --text-color: #111;
+        --secondary-color: #444;
+        --section-bg: #fff;
+        --button-bg: #00c084;
+        --button-text: #fff;
+      }
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #111;
-      color: #fff;
+      background: var(--bg-color);
+      color: var(--text-color);
     }
     header {
       padding: 3rem 2rem;
-      background: #000;
+      background: var(--bg-color);
       text-align: center;
     }
     header img {
@@ -29,7 +48,7 @@
     }
     header p {
       font-size: 1.2rem;
-      color: #bbb;
+      color: var(--secondary-color);
     }
     .section {
       padding: 4rem 2rem;
@@ -42,7 +61,7 @@
       gap: 2rem;
     }
     .feature {
-      background: #1b1b1b;
+      background: var(--section-bg);
       padding: 1.5rem;
       border-radius: 8px;
     }
@@ -59,20 +78,52 @@
       font-size: 1rem;
     }
     .cta button {
-      background: #00f3a0;
-      color: #000;
+      background: var(--button-bg);
+      color: var(--button-text);
       padding: 1rem 2rem;
       font-size: 1rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
+    .team-section {
+      padding: 4rem 2rem;
+      background: var(--section-bg);
+      text-align: center;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+      margin-top: 2rem;
+    }
+    .team-member {
+      text-align: center;
+    }
+    .team-member img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      filter: grayscale(100%);
+    }
+    .team-member h3 {
+      margin: 0.5rem 0 0.2rem;
+      font-size: 1.1rem;
+    }
+    .team-member p {
+      margin: 0;
+      color: var(--secondary-color);
+      font-size: 0.9rem;
+    }
     footer {
       padding: 2rem;
-      background: #000;
+      background: var(--bg-color);
       text-align: center;
       font-size: 0.9rem;
-      color: #666;
+      color: var(--secondary-color);
     }
     @media (max-width: 768px) {
       .features {
@@ -122,10 +173,35 @@
     </div>
   </section>
 
+  <section class="team-section">
+    <h2>Meet the Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="Team-Elias.jpeg" alt="Elias Zea">
+        <h3>Elias Zea</h3>
+        <p>Founder / Technical Lead / R&D & Administrative Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
+        <h3>Genaro Mosquera</h3>
+        <p>Founder / Product Development Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Aruana.jpeg" alt="Aruana Rosa">
+        \1Founder / Business Strategy & Commercial Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
+        <h3>Silvin Willemsen</h3>
+        <p>Software Developer</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section cta">
     <h2>Join the Beta</h2>
     <p>Be among the first to experience seamless audio sync. Sign up now to test LatencyFix in your own studio or stage setup.</p>
-    <form action="https://formspree.io/f/xqaqoyzb" method="POST">
+    <form action="https://formspree.io/f/your-form-id" method="POST">
       <input type="email" name="email" placeholder="Your email address" required />
       <button type="submit">Request Early Access</button>
     </form>
@@ -134,7 +210,7 @@
   <footer>
     &copy; 2025 J2 / LatencyFix. All rights reserved.<br />
     This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.<br />
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color: #888;">View License</a>
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color: var(--secondary-color);">View License</a>
   </footer>
 </body>
 </html>
