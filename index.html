@@ -50,6 +50,14 @@
       text-align: center;
       margin-top: 3rem;
     }
+    .cta input[type="email"] {
+      padding: 0.8rem;
+      margin-right: 1rem;
+      border: none;
+      border-radius: 4px;
+      width: 250px;
+      font-size: 1rem;
+    }
     .cta button {
       background: #00f3a0;
       color: #000;
@@ -70,12 +78,19 @@
       .features {
         grid-template-columns: 1fr;
       }
+      .cta input[type="email"] {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      .cta button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.jpeg" alt="LatencyFix logo" />
+    <img src="logo.jpg" alt="LatencyFix logo" />
     <h1>LatencyFix</h1>
     <p>Precision Sync for Studio, Remote, and Live Audio Collaboration</p>
   </header>
@@ -110,7 +125,10 @@
   <section class="section cta">
     <h2>Join the Beta</h2>
     <p>Be among the first to experience seamless audio sync. Sign up now to test LatencyFix in your own studio or stage setup.</p>
-    <button>Request Early Access</button>
+    <form action="https://formspree.io/f/xqaqoyzb" method="POST">
+      <input type="email" name="email" placeholder="Your email address" required />
+      <button type="submit">Request Early Access</button>
+    </form>
   </section>
 
   <footer>
