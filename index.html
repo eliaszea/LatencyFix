@@ -86,17 +86,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .inline-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .inline-options label {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
     .team-section {
       padding: 4rem 2rem;
       background: var(--section-bg);
@@ -139,31 +128,164 @@
   </style>
 </head>
 <body>
-  <!-- Content before the form remains unchanged -->
+  <header>
+    <img src="logo.jpeg" alt="LatencyFix logo" />
+    <h1>LatencyFix</h1>
+    <p>Precision Sync for Studio, Remote, and Live Audio Collaboration</p>
+  </header>
+
+  <section class="section">
+    <h2>Why LatencyFix?</h2>
+    <p>Latency ruins musical timing, breaks creative flow, and makes remote production frustrating. LatencyFix solves that by intelligently synchronizing delays across all parts of your audio setup – from plugins and audio interfaces to internet connections and live gear.</p>
+  </section>
+
+  <section class="section">
+    <h2>Key Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Plugin-Based Solution</h3>
+        <p>Works inside any DAW. Install and sync automatically – no hardware required.</p>
+      </div>
+      <div class="feature">
+        <h3>AI-Powered Sync</h3>
+        <p>Predicts and compensates for latency in real time across diverse setups.</p>
+      </div>
+      <div class="feature">
+        <h3>Remote & Live Ready</h3>
+        <p>Perfect for studios, streaming sessions, and hybrid performances.</p>
+      </div>
+      <div class="feature">
+        <h3>Designed by Audio Engineers</h3>
+        <p>Built by and for professionals with deep experience in audio production and signal processing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <h2>Meet the Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="Team-Elias.jpeg" alt="Elias Zea">
+        <h3>Elias Zea</h3>
+        <p>Founder / Technical Lead / R&D & Administrative Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
+        <h3>Genaro Mosquera</h3>
+        <p>Founder / Product Development Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Aruana.jpeg" alt="Aruana Rosa">
+        <h3>Aruana Rosa</h3>
+        <p>Founder / Business Strategy & Commercial Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
+        <h3>Silvin Willemsen</h3>
+        <p>Audio Plugin Developer</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section cta">
     <h2>Join the Beta</h2>
+    <p>Be among the first to experience seamless audio sync. Sign up now to test LatencyFix in your own studio or stage setup.</p>
     <form action="https://formspree.io/f/xqaqoyzb" method="POST">
       <input type="email" name="email" placeholder="Your email address" required />
 
       <label>Request a demo:</label><br>
-      <div class="inline-options">
-        <label><input type="checkbox" name="demo" value="Studio"> Studio</label>
-        <label><input type="checkbox" name="demo" value="Streaming"> Streaming</label>
-        <label><input type="checkbox" name="demo" value="Live"> Live</label>
-      </div>
+      <input type="checkbox" name="demo" value="Studio"> Studio<br>
+      <input type="checkbox" name="demo" value="Streaming"> Streaming<br>
+      <input type="checkbox" name="demo" value="Live"> Live<br><br>
 
       <label>Are you a…</label><br>
-      <div class="inline-options">
-        <label><input type="checkbox" name="role" value="Sound Engineer"> Sound Engineer</label>
-        <label><input type="checkbox" name="role" value="Music Producer"> Music Producer</label>
-        <label><input type="checkbox" name="role" value="Independent Artist"> Independent Artist</label>
-        <label><input type="checkbox" name="role" value="Systems Engineer"> Systems Engineer</label>
-        <label><input type="checkbox" name="role" value="Event Producer"> Event Producer</label>
-      </div>
+      <input type="checkbox" name="role" value="Sound Engineer"> Sound Engineer<br>
+      <input type="checkbox" name="role" value="Music Producer"> Music Producer<br>
+      <input type="checkbox" name="role" value="Independent Artist"> Independent Artist<br>
+      <input type="checkbox" name="role" value="Systems Engineer"> Systems Engineer<br>
+      <input type="checkbox" name="role" value="Event Producer"> Event Producer<br>
       <input type="text" name="role_other" placeholder="Other..."><br><br>
 
-      <!-- Remaining form elements unchanged -->
-      <!-- textarea, select dropdowns, and other fields remain vertical for readability -->
+      <label>Which platforms, tools, or DAWs do you use the most in your workflow?</label><br>
+      <textarea name="platforms"></textarea><br>
+
+      <label>What do you currently do to handle audio latency in your setup?</label><br>
+      <textarea name="latency_handling"></textarea><br>
+
+      <label>How often do you experience latency?</label><br>
+      <select name="latency_frequency">
+        <option>Never</option>
+        <option>Rarely</option>
+        <option>Sometimes</option>
+        <option>Often</option>
+        <option>Always</option>
+      </select><br>
+
+      <label>How disruptive is it to your workflow?</label><br>
+      <select name="latency_disruption">
+        <option>Not disruptive</option>
+        <option>Slightly disruptive</option>
+        <option>Moderately disruptive</option>
+        <option>Very disruptive</option>
+        <option>Extremely disruptive</option>
+      </select><br>
+
+      <label>How does it affect the productivity, creative flow, and quality of the recording?</label><br>
+      <select name="latency_productivity">
+        <option>No effect</option>
+        <option>Slightly decreases</option>
+        <option>Moderately decreases</option>
+        <option>Severely decreases</option>
+        <option>Stops workflow entirely</option>
+      </select><br>
+
+      <label>Have latency issues ever cost you a client or deadline?</label><br>
+      <select name="latency_impact">
+        <option>Yes</option>
+        <option>No</option>
+      </select><br>
+
+      <label>Do latency issues affect your confidence in your setup?</label><br>
+      <select name="latency_confidence">
+        <option>Yes</option>
+        <option>No</option>
+        <option>Sometimes</option>
+      </select><br>
+
+      <label>Would you pay for a tool that automatically syncs latency?</label><br>
+      <select name="pay_interest">
+        <option>Yes</option>
+        <option>No</option>
+        <option>Maybe / Depends on price</option>
+      </select><br>
+
+      <label>What price would be acceptable?</label><br>
+      <select name="price_range">
+        <option>Under $20/month</option>
+        <option>$20–49/month</option>
+        <option>$50–99/month</option>
+        <option>$100 or more</option>
+        <option>I prefer paying per project</option>
+        <option>I prefer a one-time license</option>
+      </select><br>
+
+      <label>How urgently would you want a solution?</label><br>
+      <select name="urgency">
+        <option>Not urgent</option>
+        <option>Slightly urgent</option>
+        <option>Moderately urgent</option>
+        <option>Very urgent</option>
+        <option>Extremely urgent – I’d download it today</option>
+      </select><br>
+
+      <label>Have you used or heard of similar plugins?</label><br>
+      <select name="used_similar">
+        <option>Yes</option>
+        <option>No</option>
+      </select><br>
+
+      <label>If yes, which one?</label><br>
+      <input type="text" name="similar_plugin"><br><br>
 
       <button type="submit">Submit</button>
     </form>
