@@ -132,14 +132,17 @@
     }
     .inline-options {
       display: flex;
+      flex-wrap: wrap;
       gap: 1.5rem;
       margin-bottom: 1rem;
-      flex-wrap: wrap;
     }
+    
     .inline-options label {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      white-space: nowrap;
+      line-height: 1.4;
     }
   </style>
 </head>
@@ -165,7 +168,7 @@
       </div>
       <div class="feature">
         <h3>AI-Powered Sync</h3>
-        <p>Predicts and compensates for latency in real time across diverse setups.</p>
+        <p>Predicts and synchronizes latency in real time across diverse setups.</p>
       </div>
       <div class="feature">
         <h3>Remote & Live Ready</h3>
