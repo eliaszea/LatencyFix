@@ -66,15 +66,15 @@
       border-radius: 8px;
     }
     .cta {
-      text-align: center;
+      text-align: left;
       margin-top: 3rem;
     }
-    .cta input[type="email"] {
+    .cta input, .cta select, .cta textarea {
+      width: 100%;
       padding: 0.8rem;
-      margin-right: 1rem;
-      border: none;
+      margin-bottom: 1rem;
       border-radius: 4px;
-      width: 250px;
+      border: none;
       font-size: 1rem;
     }
     .cta button {
@@ -124,18 +124,6 @@
       text-align: center;
       font-size: 0.9rem;
       color: var(--secondary-color);
-    }
-    @media (max-width: 768px) {
-      .features {
-        grid-template-columns: 1fr;
-      }
-      .cta input[type="email"] {
-        width: 100%;
-        margin-bottom: 1rem;
-      }
-      .cta button {
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -194,17 +182,111 @@
       <div class="team-member">
         <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
         <h3>Silvin Willemsen</h3>
-        <p>Software Developer</p>
+        <p>Audio Plugin Developer</p>
       </div>
     </div>
   </section>
 
   <section class="section cta">
     <h2>Join the Beta</h2>
-    <p>Be among the first to experience seamless audio sync. Sign up now to test LatencyFix in your own studio or stage setup.</p>
     <form action="https://formspree.io/f/xqaqoyzb" method="POST">
       <input type="email" name="email" placeholder="Your email address" required />
-      <button type="submit">Request Early Access</button>
+
+      <label>Request a demo:</label><br>
+      <input type="checkbox" name="demo" value="Studio"> Studio<br>
+      <input type="checkbox" name="demo" value="Streaming"> Streaming<br>
+      <input type="checkbox" name="demo" value="Live"> Live<br><br>
+
+      <label>Are you a…</label><br>
+      <input type="checkbox" name="role" value="Sound Engineer"> Sound Engineer<br>
+      <input type="checkbox" name="role" value="Music Producer"> Music Producer<br>
+      <input type="checkbox" name="role" value="Independent Artist"> Independent Artist<br>
+      <input type="checkbox" name="role" value="Systems Engineer"> Systems Engineer<br>
+      <input type="checkbox" name="role" value="Event Producer"> Event Producer<br>
+      <input type="text" name="role_other" placeholder="Other..."><br><br>
+
+      <label>Which platforms, tools, or DAWs do you use the most in your workflow?</label><br>
+      <textarea name="platforms"></textarea><br>
+
+      <label>What do you currently do to handle audio latency in your setup?</label><br>
+      <textarea name="latency_handling"></textarea><br>
+
+      <label>How often do you experience latency?</label><br>
+      <select name="latency_frequency">
+        <option>Never</option>
+        <option>Rarely</option>
+        <option>Sometimes</option>
+        <option>Often</option>
+        <option>Always</option>
+      </select><br>
+
+      <label>How disruptive is it to your workflow?</label><br>
+      <select name="latency_disruption">
+        <option>Not disruptive</option>
+        <option>Slightly disruptive</option>
+        <option>Moderately disruptive</option>
+        <option>Very disruptive</option>
+        <option>Extremely disruptive</option>
+      </select><br>
+
+      <label>How does it affect the productivity, creative flow, and quality of the recording?</label><br>
+      <select name="latency_productivity">
+        <option>No effect</option>
+        <option>Slightly decreases</option>
+        <option>Moderately decreases</option>
+        <option>Severely decreases</option>
+        <option>Stops workflow entirely</option>
+      </select><br>
+
+      <label>Have latency issues ever cost you a client or deadline?</label><br>
+      <select name="latency_impact">
+        <option>Yes</option>
+        <option>No</option>
+      </select><br>
+
+      <label>Do latency issues affect your confidence in your setup?</label><br>
+      <select name="latency_confidence">
+        <option>Yes</option>
+        <option>No</option>
+        <option>Sometimes</option>
+      </select><br>
+
+      <label>Would you pay for a tool that automatically syncs latency?</label><br>
+      <select name="pay_interest">
+        <option>Yes</option>
+        <option>No</option>
+        <option>Maybe / Depends on price</option>
+      </select><br>
+
+      <label>What price would be acceptable?</label><br>
+      <select name="price_range">
+        <option>Under $20/month</option>
+        <option>$20–49/month</option>
+        <option>$50–99/month</option>
+        <option>$100 or more</option>
+        <option>I prefer paying per project</option>
+        <option>I prefer a one-time license</option>
+      </select><br>
+
+      <label>How urgently would you want a solution?</label><br>
+      <select name="urgency">
+        <option>Not urgent</option>
+        <option>Slightly urgent</option>
+        <option>Moderately urgent</option>
+        <option>Very urgent</option>
+        <option>Extremely urgent – I’d download it today</option>
+      </select><br>
+
+      <label>Have you used or heard of similar plugins?</label><br>
+      <select name="used_similar">
+        <option>Yes</option>
+        <option>No</option>
+      </select><br>
+
+      <label>If yes, which one?</label><br>
+      <input type="text" name="similar_plugin"><br><br>
+
+      <button type="submit">Submit</button>
     </form>
   </section>
 
