@@ -130,6 +130,17 @@
       font-size: 0.9rem;
       color: var(--secondary-color);
     }
+    .inline-options {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .inline-options label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
   </style>
 </head>
   
@@ -200,10 +211,10 @@
       <input type="email" name="email" placeholder="Your email address" required />
 
       <label>Request a demo:</label><br>
-      <div class="cta">
-        <label><input type="checkbox" name="demo" value="Studio"> Studio</label><br>
-        <label><input type="checkbox" name="demo" value="Streaming"> Streaming</label><br>
-        <label><input type="checkbox" name="demo" value="Live"> Live</label><br>
+      <div class="inline-options">
+        <label><input type="checkbox" name="demo" value="Studio"> Studio</label>
+        <label><input type="checkbox" name="demo" value="Streaming"> Streaming</label>
+        <label><input type="checkbox" name="demo" value="Live"> Live</label>
       </div>
 
       <label>Are you a…</label><br>
