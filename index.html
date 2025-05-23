@@ -133,16 +133,19 @@
     .inline-options {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
+    
     .inline-options label {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 1rem;
-      line-height: 1.2;
     }
+    
+    .inline-options label span {
+      margin-left: 0.4rem;
+    }
+    
     .inline-options input[type="checkbox"],
     .inline-options input[type="radio"] {
       margin: 0;
@@ -227,9 +230,9 @@
 
       <label>Request a demo:</label><br>
       <div class="inline-options">
-        <label><input type="checkbox" name="demo" value="Studio"> Studio</label>
-        <label><input type="checkbox" name="demo" value="Streaming"> Streaming</label>
-        <label><input type="checkbox" name="demo" value="Live"> Live</label>
+        <label><input type="checkbox" name="demo" value="Studio"><span>Studio</span></label>
+        <label><input type="checkbox" name="demo" value="Streaming"><span>Streaming</span></label>
+        <label><input type="checkbox" name="demo" value="Live"><span>Live</span></label>
       </div>
 
       <label>Are you a…</label>
