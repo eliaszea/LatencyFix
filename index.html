@@ -133,22 +133,22 @@
     .inline-options {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
       margin-bottom: 1rem;
     }
     
-    .inline-options label {
+    .inline-options .option {
       display: flex;
       align-items: center;
     }
     
-    .inline-options label span {
-      margin-left: 0.4rem;
+    .inline-options .option input {
+      margin: 0;
     }
     
-    .inline-options input[type="checkbox"],
-    .inline-options input[type="radio"] {
-      margin: 0;
+    .inline-options .option span {
+      margin-left: 0.4rem;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -230,9 +230,9 @@
 
       <label>Request a demo:</label><br>
       <div class="inline-options">
-        <label><input type="checkbox" name="demo" value="Studio"><span>Studio</span></label>
-        <label><input type="checkbox" name="demo" value="Streaming"><span>Streaming</span></label>
-        <label><input type="checkbox" name="demo" value="Live"><span>Live</span></label>
+        <div class="option"><label><input type="checkbox" name="demo" value="Studio"><span>Studio</span></label></div>
+        <div class="option"><label><input type="checkbox" name="demo" value="Streaming"><span>Streaming</span></label></div>
+        <div class="option"><label><input type="checkbox" name="demo" value="Live"><span>Live</span></label></div>
       </div>
 
       <label>Are you a…</label>
