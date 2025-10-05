@@ -172,16 +172,7 @@
     }
 
     /* === Screenshots + System Requirements layout === */
-    .showcase {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      align-items: center;
-    }
-    .showcase-left,
-    .showcase-right {
-      flex: 1 1 420px;
-    }
+    /* === Slideshow with controls & dots === */
     .slideshow {
       position: relative;
       width: 100%;
@@ -191,33 +182,67 @@
       border-radius: 12px;
       background: #000;
     }
-    .slideshow img {
+    
+    .slide {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
+      inset: 0;
       opacity: 0;
-      animation: fadeSlide 15s infinite;
+      transition: opacity .5s ease;
     }
-    .slideshow img:nth-child(1) { animation-delay: 0s;  }
-    .slideshow img:nth-child(2) { animation-delay: 5s;  }
-    .slideshow img:nth-child(3) { animation-delay: 10s; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slide.is-active { opacity: 1; }
     
-    @keyframes fadeSlide {
-      0%   {opacity: 0;}
-      5%   {opacity: 1;}
-      30%  {opacity: 1;}
-      35%  {opacity: 0;}
-      100% {opacity: 0;}
+    /* Prev/Next buttons */
+    .slide-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      background: rgba(0,0,0,.45);
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .slide-nav:hover { background: rgba(0,0,0,.65); }
+    .slide-nav:focus-visible { outline: 2px solid #00f3a0; outline-offset: 2px; }
+    .slide-prev { left: 10px; }
+    .slide-next { right: 10px; }
+    
+    /* Dots */
+    .slide-dots {
+      position: absolute;
+      left: 0; right: 0; bottom: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 4;
+    }
+    .slide-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.8);
+      background: rgba(255,255,255,.2);
+      cursor: pointer;
+    }
+    .slide-dot.is-active {
+      background: #00f3a0;
+      border-color: #00f3a0;
     }
     
-    .requirements ul {
-      list-style: disc;
-      padding-left: 1.4rem;
-    }
-    .requirements li {
-      margin-bottom: .4rem;
-    }
+    /* (Unchanged) 2-column layout helpers */
+    .showcase { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
+    .showcase-left, .showcase-right { flex: 1 1 420px; }
+    .requirements ul { list-style: disc; padding-left: 1.4rem; }
+    .requirements li { margin-bottom: .4rem; }
     
     /* --- Button-style link for manual --- */
     .btn {
@@ -279,28 +304,52 @@
 
   <!-- Screenshots + System Requirements -->
   <section class="section">
-    <div class="showcase">
-      <!-- Left: slideshow -->
-      <div class="showcase-left">
-        <div class="slideshow">
-          <img src="pic-ping-send.jpg" alt="LatencyFix screenshot 1">
-          <img src="pic-ping-receive.jpg" alt="LatencyFix screenshot 2">
-          <img src="pic-nudge.jpg" alt="LatencyFix screenshot 3">
+      <div class="showcase">
+        <!-- Left: slideshow with controls & dots -->
+        <div class="showcase-left">
+          <h2>Screenshots</h2>
+          <p class="muted">A quick look at the plugin UI and workflow.</p>
+    
+          <div class="slideshow" id="lf-slideshow" aria-roledescription="carousel">
+            <!-- slides -->
+            <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
+              <img src="pic-ping-send.jpg" alt="LatencyFix screenshot: Ping Send view">
+            </div>
+            <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+              <img src="pic-ping-receive.jpg" alt="LatencyFix screenshot: Ping Receive view">
+            </div>
+            <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+              <img src="pic-nudge.jpg" alt="LatencyFix screenshot: Nudge view">
+            </div>
+    
+            <!-- controls -->
+            <button class="slide-nav slide-prev" aria-label="Previous slide" type="button">‹</button>
+            <button class="slide-nav slide-next" aria-label="Next slide" type="button">›</button>
+    
+            <!-- dots -->
+            <div class="slide-dots" aria-label="Choose slide" role="tablist">
+              <button class="slide-dot is-active" role="tab" aria-selected="true" aria-controls="lf-slide-1" type="button"></button>
+              <button class="slide-dot" role="tab" aria-selected="false" aria-controls="lf-slide-2" type="button"></button>
+              <button class="slide-dot" role="tab" aria-selected="false" aria-controls="lf-slide-3" type="button"></button>
+            </div>
+          </div>
         </div>
-      </div>
   
       <!-- Right: system requirements -->
       <div class="showcase-right requirements">
         <h2>System requirements</h2>
         <ul>
-          <li>Operating System: macOS (10.6 or newer)</li>
           <li>Plugin Formats: AU, VST 2.4, VST 3, AAX, RTAS</li>
+          <li>Operating System: macOS (10.6 or newer)</li>
           <li>Disk space: 13.1 MB</li>
+        </ul>
+        <h2>Technical specifications</h2>
+        <ul>
+          <li>Precision: < 20 microseconds</li>
           <li>Sample rates : up to 192 kHz</li>
           <li>Bit depth: 64 bits (floating point)</li>
           <li>Channels: mono and stereo</li>
           <li>Compatible DAWs: Pro Tools (and others to come!)</li>
-        </ul>
       </div>
     </div>
   </section>
