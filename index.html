@@ -306,10 +306,7 @@
   <section class="section">
       <div class="showcase">
         <!-- Left: slideshow with controls & dots -->
-        <div class="showcase-left">
-          <h2>Screenshots</h2>
-          <p class="muted">A quick look at the plugin UI and workflow.</p>
-    
+        <div class="showcase-left">    
           <div class="slideshow" id="lf-slideshow" aria-roledescription="carousel">
             <!-- slides -->
             <div class="slide is-active" role="group" aria-roledescription="slide" aria-label="1 of 3">
@@ -507,5 +504,68 @@
     This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.<br />
     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color: var(--secondary-color);">View License</a>
   </footer>
+
+  <script>
+    (function(){
+      const root   = document.getElementById('lf-slideshow');
+      if(!root) return;
+  
+      const slides = Array.from(root.querySelectorAll('.slide'));
+      const dots   = Array.from(root.querySelectorAll('.slide-dot'));
+      const prev   = root.querySelector('.slide-prev');
+      const next   = root.querySelector('.slide-next');
+  
+      let i = 0;
+      const N = slides.length;
+      let timer = null;
+      const INTERVAL_MS = 5000;
+  
+      function show(idx){
+        i = (idx + N) % N;
+        slides.forEach((s, k) => {
+          s.classList.toggle('is-active', k === i);
+          s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
+        });
+        dots.forEach((d, k) => {
+          d.classList.toggle('is-active', k === i);
+          d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+        });
+      }
+  
+      function nextSlide(){ show(i + 1); }
+      function prevSlide(){ show(i - 1); }
+  
+      function start(){
+        stop();
+        timer = setInterval(nextSlide, INTERVAL_MS);
+      }
+      function stop(){
+        if(timer){ clearInterval(timer); timer = null; }
+      }
+  
+      // events
+      next.addEventListener('click', ()=>{ nextSlide(); start(); });
+      prev.addEventListener('click', ()=>{ prevSlide(); start(); });
+      dots.forEach((d, k) => d.addEventListener('click', () => { show(k); start(); }));
+  
+      // pause on hover / focus for accessibility
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin',  stop);
+      root.addEventListener('focusout', start);
+  
+      // keyboard arrows
+      root.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){ e.preventDefault(); nextSlide(); start(); }
+        if(e.key === 'ArrowLeft'){  e.preventDefault(); prevSlide(); start(); }
+      });
+      root.setAttribute('tabindex', '0');
+  
+      // init
+      show(0);
+      start();
+    })();
+  </script>
+              
 </body>
 </html>
