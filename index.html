@@ -220,17 +220,32 @@
       margin-bottom: .4rem;
     }
     
-    /* --- Button-style link for manual --- */
+    /* Gate panel */
+    .download-panel {
+      background: linear-gradient(135deg, #122, #1b1b1b);
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid #233;
+      margin-top: 1.25rem;
+    }
+    .download-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      margin-top: .6rem;
+    }
     .btn {
-      display: inline-block;
-      padding: 0.9rem 1.2rem;
-      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .8rem 1.1rem;
+      border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
     }
-    .btn-primary { background: var(--button-bg); color: var(--button-text); }
-    .btn-ghost   { background: #000; border: 1px solid #333; color: #fff; }
-    .muted { color: var(--secondary-color); font-size: 0.95rem; }
+    .btn-primary { background: var(--button-bg, #00f3a0); color: var(--button-text, #000); }
+    .btn-ghost   { background: #000; color: #fff; border: 1px solid #333; }
+    .muted { color: var(--secondary-color, #bbb); font-size: .95rem; }
     
   </style>
 </head>
@@ -454,6 +469,24 @@
 
       <button type="submit">Submit</button>
     </form>
+
+    <!-- Gate shown after successful submission -->
+    <div id="download-gate" class="download-panel" hidden>
+      <strong>Thanks! Your request has been received.</strong>
+      <p class="muted" style="margin-top:.4rem;">
+        You’ll receive an <b>email with your personal demo download link</b> shortly.
+        Meanwhile, you can download the <b>User Manual</b> here:
+      </p>
+      <div class="download-actions">
+        <!-- TODO: replace href with your real manual URL (e.g., GitHub Release asset) -->
+        <a class="btn btn-primary" id="manual-link" href="LatencyFix-User-Manual.pdf" download>
+          Download User Manual (PDF)
+        </a>
+      </div>
+    </div>
+    
+    <!-- Status message under the submit button -->
+    <div id="formStatus" class="muted" role="status" aria-live="polite" style="margin-top:.6rem;"></div>
     
   </section>
 
@@ -524,6 +557,79 @@
       start();
     })();
   </script>
-              
+
+  <script>
+  (function(){
+    const form   = document.getElementById('beta-form');   // <-- keep your existing form id
+    const status = document.getElementById('formStatus');
+    const gate   = document.getElementById('download-gate');
+  
+    if(!form) return;
+  
+    // 1) Make fields required (by name)
+    const requiredSingles = [
+      'name','email','experience_years','platforms','latency_frequency',
+      'latency_handling','latency_disruption','latency_productivity',
+      'latency_impact','latency_confidence','pay_interest','price_range',
+      'urgency','used_similar','consent'
+    ];
+    requiredSingles.forEach(n => {
+      const els = form.querySelectorAll(`[name="${n}"]`);
+      els.forEach(el => el.setAttribute('required','required'));
+    });
+  
+    // 2) Helpers to validate checkbox groups
+    function atLeastOneChecked(name){
+      return !!form.querySelector(`input[name="${name}"]:checked`);
+    }
+    function requireGroup(name, label){
+      if(atLeastOneChecked(name)) return true;
+      alert(`Please select at least one option for "${label}".`);
+      // Focus first input of the group to help the user
+      const first = form.querySelector(`input[name="${name}"]`);
+      if(first) first.focus();
+      return false;
+    }
+  
+    // 3) Submit handler (Formspree)
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+  
+      // Built-in validation for singles
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
+      // Group validations
+      if(!requireGroup('demo','Request a demo')) return;
+      if(!requireGroup('role','Are you a…')) return;
+  
+      status.textContent = 'Submitting…';
+  
+      try{
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+  
+        if(res.ok){
+          status.textContent = 'Thanks! Form received.';
+          // Reveal the gated panel
+          if(gate) gate.hidden = false;
+          // Optional: scroll to the gate
+          if(gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
+          // Reset inputs (keeps gate visible)
+          form.reset();
+        }else{
+          status.textContent = 'Submission failed. Please try again or email us.';
+        }
+      }catch(err){
+        status.textContent = 'Network error. Please try again.';
+      }
+    });
+  })();
+  </script>
+            
 </body>
 </html>
