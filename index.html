@@ -187,8 +187,36 @@
       filter: grayscale(100%);   /* preserves your grayscale look */
     }
     
-    /* OPTIONAL: tweak existing rule so it doesn’t fight with the wrapper */
-    .team-member img { border-radius: 0; }  /* we now mask via .avatar */
+    /* Normalize team card layout so names line up */
+    .team-member { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+    }
+    
+    /* The outer holder should be identical height for both patterns: 
+       - direct <img> (others) 
+       - .avatar wrapper (Genaro)
+    */
+    .team-member > img,
+    .team-member .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;   /* keep round look */
+      overflow: hidden;     /* so zoomed inner image can crop */
+      margin: 0 auto 1rem;  /* consistent gap above the name */
+    }
+    
+    /* G Inner image: zoom + keep round crop handled by the wrapper */
+    .team-member .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(var(--avatar-zoom, 1));
+      transform-origin: center;
+      filter: grayscale(100%);
+      border-radius: 0;     /* avoid double rounding inside the mask */
+    }
     
     /* --- Screenshots grid --- */
     .media-grid {
@@ -208,7 +236,6 @@
       border-radius: 6px;
     }
 
-    /* === Screenshots + System Requirements layout === */
     /* === Screenshots + System Requirements layout === */
     .showcase {
       display: flex;
@@ -372,7 +399,7 @@
         <p>Acoustics & AI Scientist</p>
       </div>
       <div class="team-member">
-        <div class="avatar" style="--avatar-zoom:1.05">
+        <div class="avatar" style="--avatar-zoom:1.12">
           <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
         </div>
         <h3>Genaro Mosquera</h3>
