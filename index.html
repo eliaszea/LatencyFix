@@ -465,7 +465,7 @@
   <section class="section cta">
     <h2>Request demo</h2>
     <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
-    <form action="https://formspree.io/f/xqaqoyzb" method="POST">
+    <form id="beta-form" method="POST">
       
       <label for="name">Name</label>
       <input type="text" name="name" id="name" placeholder="Your full name" required><br><br>
@@ -633,12 +633,12 @@
   </footer>
 
   <script>
-    (function(){
-      const form   = document.getElementById('beta-form');   // <-- keep your existing form id
+    (function () {
+      const form   = document.getElementById('beta-form');
       const status = document.getElementById('formStatus');
       const gate   = document.getElementById('download-gate');
     
-      if(!form) return;
+      if (!form) return;
     
       // 1) Make fields required (by name)
       const requiredSingles = [
@@ -653,71 +653,75 @@
       });
     
       // 2) Helpers to validate checkbox groups
-      function atLeastOneChecked(name){
+      function atLeastOneChecked(name) {
         return !!form.querySelector(`input[name="${name}"]:checked`);
       }
-      function requireGroup(name, label){
-        if(atLeastOneChecked(name)) return true;
+      function requireGroup(name, label) {
+        if (atLeastOneChecked(name)) return true;
         alert(`Please select at least one option for "${label}".`);
-        // Focus first input of the group to help the user
         const first = form.querySelector(`input[name="${name}"]`);
-        if(first) first.focus();
+        if (first) first.focus();
         return false;
       }
     
-      // 3) Submit handler (Formspree)
-      form.addEventListener('submit', async (e)=>{
+      // 3) Disable "similar_plugin" when used_similar = No
+      const usedSimilarSelect = form.querySelector('select[name="used_similar"]');
+      const similarInput      = form.querySelector('input[name="similar_plugin"]');
+      if (usedSimilarSelect && similarInput) {
+        const toggleSimilar = () => {
+          const val = (usedSimilarSelect.value || '').toLowerCase();
+          const disable = (val === 'no' || val === '');
+          similarInput.disabled = disable;
+          if (disable) similarInput.value = '';
+        };
+        usedSimilarSelect.addEventListener('change', toggleSimilar);
+        toggleSimilar(); // initial state
+      }
+    
+      // 4) Submit handler —> POST directly to your Netlify Function
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
     
         // Built-in validation for singles
-        if(!form.checkValidity()){
+        if (!form.checkValidity()) {
           form.reportValidity();
           return;
         }
         // Group validations
-        if(!requireGroup('demo','Request a demo')) return;
-        if(!requireGroup('role','Are you a…')) return;
+        if (!requireGroup('demo', 'Request a demo')) return;
+        if (!requireGroup('role', 'Are you a…')) return;
     
         status.textContent = 'Submitting…';
     
-        try{
-          const res = await fetch(form.action, {
+        try {
+          const payload = Object.fromEntries(new FormData(form).entries());
+    
+          const res = await fetch('/.netlify/functions/formspree-webhook', {
             method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
           });
     
-          if(res.ok){
-            status.textContent = 'Thanks! Form received.';
-            // Reveal the gated panel
-            if(gate) gate.hidden = false;
-            // Optional: scroll to the gate
-            if(gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
-            // Reset inputs (keeps gate visible)
+          if (res.ok) {
+            status.textContent = 'Thanks! Your request has been received.';
+            if (gate) gate.hidden = false;
+            if (gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
             form.reset();
-          }else{
-            status.textContent = 'Submission failed. Please try again or email us.';
+            // ensure the similar field re-disables after reset
+            if (usedSimilarSelect && similarInput) {
+              usedSimilarSelect.value = '';
+              similarInput.disabled = true;
+            }
+          } else {
+            const msg = await res.text().catch(() => '');
+            status.textContent = 'Submission failed. Please try again.' + (msg ? ` (${msg})` : '');
           }
-        }catch(err){
+        } catch (err) {
           status.textContent = 'Network error. Please try again.';
         }
       });
     })();
-
-    // --- disable "similar_plugin" if user selects "No" ---
-    const usedSimilarSelect = form.querySelector('select[name="used_similar"]');
-    const similarInput = form.querySelector('input[name="similar_plugin"]');
-    if (usedSimilarSelect && similarInput) {
-      const toggleSimilar = () => {
-        const val = usedSimilarSelect.value;
-        const disable = (val.toLowerCase() === 'no' || val === '');
-        similarInput.disabled = disable;
-        if (disable) similarInput.value = ''; // clear if switching to No
-      };
-      usedSimilarSelect.addEventListener('change', toggleSimilar);
-      toggleSimilar(); // initial state on load
-    }
-  </script>
+    </script>
             
 </body>
 </html>
