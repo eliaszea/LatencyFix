@@ -7,12 +7,14 @@
   <title>LatencyFix – Real-time sync for analog and digital sound systems</title>
   <style>
     :root {
-      --bg-color: #111;
-      --text-color: #fff;
-      --secondary-color: #bbb;
-      --section-bg: #1b1b1b;
-      --button-bg: #00f3a0;
-      --button-text: #000;
+      --bg-color: #1e1e1e;
+      --text-color: #ffffff;
+      --secondary-color: #bbbbbb;
+      --section-bg: #2a2a2a;
+      --button-bg: #9dbba7;
+      --button-text: #000000;
+      --link-color: #9dbba7;
+      --link-hover: #b4cfc0;
     }    
     body {
       font-family: Arial, sans-serif;
@@ -49,6 +51,9 @@
       padding: 4rem 2rem;
       max-width: 960px;
       margin: auto;
+      background: linear-gradient(145deg, #242424 0%, #1a1a1a 100%);
+      border: 1px solid #2e2e2e;
+      box-shadow: inset 0 0 5px rgba(255,255,255,0.03), 0 2px 6px rgba(0,0,0,0.5);
     }
     .features {
       display: grid;
@@ -81,6 +86,14 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    
+    .cta button:hover,
+    .cta button:focus {
+      background: #b4cfc0;    /* lighter variant on hover */
+      color: #000;
+      transition: background 0.25s ease;
+    }
+    
     .cta label input[type="checkbox"],
     .cta label input[type="radio"] {
       margin-right: 0.5rem;
@@ -316,14 +329,16 @@
       cursor: not-allowed;
     }
 
-    /* Consistent blue links */
+    /* Pastel green links to match logo */
     a {
-      color: #7fe8ff;
+      color: #9dbba7;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
-    a:hover, a:focus {
+    a:hover,
+    a:focus {
+      color: #b4cfc0;          /* slightly lighter on hover */
       text-decoration: underline;
-      color: #9fefff; /* slightly brighter on hover */
     }
     
   </style>
