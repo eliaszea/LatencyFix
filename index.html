@@ -1,667 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LatencyFix is the first plugin to automate latency compensation across studio, live, and remote audio workflows. Built for sound engineers, producers, and live technicians." />
-  <title>LatencyFix – Real-time sync for analog and digital sound systems</title>
+  <meta charset="utf-8" />
+  <title>Privacy & Data Policy – LatencyFix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Privacy & Data Policy for the LatencyFix beta program (GDPR)." />
   <style>
-    :root {
-      --bg-color: #111;
-      --text-color: #fff;
-      --secondary-color: #bbb;
-      --section-bg: #1b1b1b;
-      --button-bg: #00f3a0;
-      --button-text: #000;
-    }    
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    input, textarea, select {
-    background: #222;
-    color: #fff;
-    border: 1px solid #333;
-    }
-    
-    header {
-      padding: 3rem 2rem;
-      background: var(--bg-color);
-      text-align: center;
-    }
-    header img {
-      max-width: 150px;
-      margin-bottom: 1rem;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: var(--secondary-color);
-    }
-    .section {
-      padding: 4rem 2rem;
-      max-width: 960px;
-      margin: auto;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-    .feature {
-      background: var(--section-bg);
-      padding: 1.5rem;
-      border-radius: 8px;
-    }
-    .cta {
-      text-align: left;
-      margin-top: 3rem;
-    }
-    .cta input, .cta select, .cta textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border-radius: 4px;
-      border: none;
-      font-size: 1rem;
-    }
-    .cta button {
-      background: var(--button-bg);
-      color: var(--button-text);
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .cta label input[type="checkbox"],
-    .cta label input[type="radio"] {
-      margin-right: 0.5rem;
-      vertical-align: middle;
-    }
-    .team-section {
-      padding: 4rem 2rem;
-      background: var(--section-bg);
-      text-align: center;
-    }
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      justify-items: center;
-      margin-top: 2rem;
-    }
-    .team-member {
-      text-align: center;
-    }
-    .team-member img {
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      filter: grayscale(100%);
-    }
-    .team-member h3 {
-      margin: 0.5rem 0 0.2rem;
-      font-size: 1.1rem;
-    }
-    .team-member p {
-      margin: 0;
-      color: var(--secondary-color);
-      font-size: 0.9rem;
-    }
-    footer {
-      padding: 2rem;
-      background: var(--bg-color);
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--secondary-color);
-    }
-    .inline-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .inline-options .option {
-      display: flex;
-      align-items: center;
-    }
-    
-    .inline-options .option input {
-      margin: 0;
-    }
-    
-    .inline-options .option span {
-      margin-left: 0.4rem;
-      white-space: nowrap;
-    }
-    
-    /* Professional labels on dark background */
-    .question-label {
-      display: block;
-      font-weight: 600;
-      color: #e6e6e6;        /* soft neutral instead of bright green */
-      margin: 1.25rem 0 .5rem;
-      letter-spacing: .02em;
-    }
-    
-    /* Inputs on dark backgrounds: subtle focus state */
-    input, textarea, select {
-      background: #1e1e1e;
-      color: #fff;
-      border: 1px solid #333;
-      border-radius: 6px;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #4a4a4a;
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
-    }
-
-    /* Avatar mask with zoom control */
-    .team-member .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      overflow: hidden;          /* hides edges when we zoom */
-      margin: 0 auto 1rem;       /* keeps layout like before */
-    }
-    
-    /* Use --avatar-zoom on the wrapper to control crop amount */
-    .team-member .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;         /* fills the circle */
-      transform: scale(var(--avatar-zoom, 1.0));
-      transform-origin: center;
-      filter: grayscale(100%);   /* preserves your grayscale look */
-    }
-    
-    /* Normalize team card layout so names line up */
-    .team-member { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-    }
-    
-    /* The outer holder should be identical height for both patterns: 
-       - direct <img> (others) 
-       - .avatar wrapper (Genaro)
-    */
-    .team-member > img,
-    .team-member .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;   /* keep round look */
-      overflow: hidden;     /* so zoomed inner image can crop */
-      margin: 0 auto 1rem;  /* consistent gap above the name */
-    }
-    
-    /* G Inner image: zoom + keep round crop handled by the wrapper */
-    .team-member .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(var(--avatar-zoom, 1));
-      transform-origin: center;
-      filter: grayscale(100%);
-      border-radius: 0;     /* avoid double rounding inside the mask */
-    }
-    
-    /* --- Screenshots grid --- */
-    .media-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    }
-    .media-card {
-      background: var(--section-bg);
-      padding: 0.75rem;
-      border-radius: 8px;
-    }
-    .media-card img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    /* === Screenshots + System Requirements layout === */
-    .showcase {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      align-items: center;
-    }
-    .showcase-left,
-    .showcase-right {
-      flex: 1 1 420px;
-    }
-    .slideshow {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #000;
-    }
-    .slideshow img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      animation: fadeSlide 15s infinite;
-    }
-    .slideshow img:nth-child(1) { animation-delay: 0s;  }
-    .slideshow img:nth-child(2) { animation-delay: 5s;  }
-    .slideshow img:nth-child(3) { animation-delay: 10s; }
-    
-    @keyframes fadeSlide {
-      0%   {opacity: 0;}
-      5%   {opacity: 1;}
-      30%  {opacity: 1;}
-      35%  {opacity: 0;}
-      100% {opacity: 0;}
-    }
-    
-    .requirements ul {
-      list-style: disc;
-      padding-left: 1.4rem;
-    }
-    .requirements li {
-      margin-bottom: .4rem;
-    }
-    
-    /* Gate panel */
-    .download-panel {
-      background: linear-gradient(135deg, #122, #1b1b1b);
-      padding: 1.25rem;
-      border-radius: 12px;
-      border: 1px solid #233;
-      margin-top: 1.25rem;
-    }
-    .download-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .8rem;
-      margin-top: .6rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      padding: .8rem 1.1rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .btn-primary { background: var(--button-bg, #00f3a0); color: var(--button-text, #000); }
-    .btn-ghost   { background: #000; color: #fff; border: 1px solid #333; }
-    .muted { color: var(--secondary-color, #bbb); font-size: .95rem; }
-    
+    :root{ --bg:#111; --fg:#fff; --muted:#bbb; --panel:#1b1b1b; --maxw:900px }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+    a{color:#7fe8ff}
+    header{padding:2.5rem 1.25rem;text-align:center;border-bottom:1px solid #1f1f1f}
+    header h1{margin:.2rem 0 .6rem;font-size:2rem}
+    header p{margin:0;color:var(--muted)}
+    nav{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem 1rem}
+    nav a{margin-right:1rem}
+    .pill{display:inline-block;padding:.25rem .6rem;border:1px solid #2a2a2a;border-radius:999px;background:#000;color:#ddd;font-size:.85rem}
+    main{max-width:var(--maxw);margin:0 auto;padding:2rem 1.25rem}
+    section{background:var(--panel);border:1px solid #222;border-radius:12px;padding:1.25rem;margin:1rem 0}
+    h2{margin:.2rem 0 1rem;font-size:1.35rem}
+    ul{margin:.4rem 0 .8rem 1.2rem}
+    li{margin:.25rem 0}
+    .foot{max-width:var(--maxw);margin:2rem auto;padding:1.25rem;color:var(--muted);font-size:.9rem;text-align:center;border-top:1px solid #1f1f1f}
   </style>
 </head>
-  
 <body>
   <header>
-    <img src="logo.jpeg" alt="LatencyFix logo" />
-    <h1>LatencyFix</h1>
-    <p>Precision sync for studio, remote, and live audio collaboration</p>
+    <h1>Privacy &amp; Data Policy</h1>
+    <p class="muted">for the LatencyFix beta program</p>
   </header>
 
-  <section class="section">
-    <h2>Why LatencyFix?</h2>
-    <p>Latency ruins musical timing, breaks creative flow, and makes remote production frustrating. LatencyFix solves that by intelligently synchronizing delays across all parts of your audio setup – from plugins and audio interfaces to internet connections and live gear.</p>
-  </section>
+  <nav>
+    <a href="index.html">← Back to site</a>
+    <span class="pill">Effective date: 8 Oct 2025</span>
+  </nav>
 
-  <section class="section">
-    <h2>Key Features</h2>
-    <div class="features">
-      <div class="feature">
-        <h3>Plugin-based solution</h3>
-        <p>Works inside any DAW and standalone. Install and sync automatically – no hardware required.</p>
-      </div>
-      <div class="feature">
-        <h3>AI-powered sync</h3>
-        <p>Predicts and synchronizes latency in real time across diverse setups.</p>
-      </div>
-      <div class="feature">
-        <h3>Remote & live ready</h3>
-        <p>Perfect for studios, streaming sessions, and hybrid performances.</p>
-      </div>
-      <div class="feature">
-        <h3>Designed by audio engineers</h3>
-        <p>Built by and for professionals with deep experience in audio production and signal processing.</p>
-      </div>
-    </div>
-  </section>
+  <main>
+    <section>
+      <h2>1) Who we are (Data Controller)</h2>
+      <ul>
+        <li><strong>Controller:</strong> LatencyFix (J²), Stockholm, Sweden</li>
+        <li><strong>Contact:</strong> <a href="mailto:j2latencyfix@gmail.com">j2latencyfix@gmail.com</a></li>
+      </ul>
+      <p>This page explains how we process your data under the EU GDPR.</p>
+    </section>
 
-  <section class="section">
-  <h2>LatencyFix in action</h2>
-  <p>Watch this quick demo to see how our plugin synchronizes latency.</p>
-  <video width="100%" controls poster="latencyfix-demo-poster.png">
-    <source src="latencyfix-demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-  </section>
+    <section>
+      <h2>2) What data we collect</h2>
+      <ul>
+        <li>Name and email address</li>
+        <li>Role, years of experience, tools/DAWs used</li>
+        <li>Latency/workflow info relevant to the beta</li>
+        <li>Consent choice</li>
+      </ul>
+    </section>
 
-  <!-- Screenshots + System Requirements -->
-  <section class="section">
-    <div class="showcase">
-      <!-- Left: slideshow -->
-      <div class="showcase-left">
-        <div class="slideshow">
-          <img src="pic-ping-send.jpg" alt="LatencyFix screenshot 1">
-          <img src="pic-ping-receive.jpg" alt="LatencyFix screenshot 2">
-          <img src="pic-nudge.jpg" alt="LatencyFix screenshot 3">
-        </div>
-      </div>
-  
-      <!-- Right: system requirements -->
-      <div class="showcase-right requirements">
-        <h2>System requirements</h2>
-        <ul>
-          <li>Plugin Formats: AU, VST 2.4, VST 3, AAX, RTAS</li>
-          <li>Operating System: macOS (10.6 or newer)</li>
-          <li>Disk space: 13.1 MB</li>
-        </ul>
-        <h2>Technical specifications</h2>
-        <ul>
-          <li>Precision: &lt; 20 &micro;s</li>
-          <li>Sample rates: up to 192 kHz</li>
-          <li>Bit depth: 64 bits (floating point)</li>
-          <li>Channels: mono and stereo</li>
-          <li>Compatible DAWs: Pro Tools (and others soon to come!)</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  
-  <section class="team-section">
-    <h2>Meet the Team</h2>
-    <div class="team-grid">
-      <div class="team-member">
-        <img src="Team-Elias.jpeg" alt="Elias Zea">
-        <h3>Elias Zea</h3>
-        <p>Founder / Technical Lead / R&D & Administrative Lead</p>
-        <p>Acoustics & AI Scientist</p>
-      </div>
-      <div class="team-member">
-        <div class="avatar" style="--avatar-zoom:1.12">
-          <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
-        </div>
-        <h3>Genaro Mosquera</h3>
-        <p>Founder / Product Development Lead</p>
-        <p>Sound & Music Production Engineer</p>
-      </div>
-      <div class="team-member">
-        <img src="Team-Aruana.jpeg" alt="Aruana Rosa">
-        <h3>Aruana Rosa</h3>
-        <p>Founder / Business & Commercial Lead</p>
-        <p>Business & Innovation Strategist</p>
-      </div>
-      <div class="team-member">
-        <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
-        <h3>Silvin Willemsen</h3>
-        <p>Founding Software Engineer</p>
-        <p>Audio Plugin Developer</p>
-      </div>
-    </div>
-  </section>
+    <section>
+      <h2>3) Why we process your data (purposes)</h2>
+      <ul>
+        <li>Provide access to the LatencyFix beta (send your download link)</li>
+        <li>Communicate about beta participation, updates, and feedback</li>
+        <li>Understand user needs and improve LatencyFix</li>
+      </ul>
+    </section>
 
-  <section class="section cta">
-    <h2>Request demo</h2>
-    <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
-    <form action="https://formspree.io/f/xqaqoyzb" method="POST">
-      
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" placeholder="Your full name" required><br><br>
+    <section>
+      <h2>4) Lawful basis</h2>
+      <p>Consent (GDPR Art. 6(1)(a)). You can withdraw consent anytime by emailing <a href="mailto:j2latencyfix@gmail.com">j2latencyfix@gmail.com</a>.</p>
+    </section>
 
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" placeholder="Your email address" required><br><br>
+    <section>
+      <h2>5) Who can access your data</h2>
+      <ul>
+        <li>LatencyFix team (need-to-know)</li>
+        <li>Formspree (form processor) acting on our behalf</li>
+        <li>Optional email/storage providers used solely to deliver the demo and manage beta comms</li>
+      </ul>
+      <p>We do not sell your data.</p>
+    </section>
 
-      <label class="question-label">Request a demo:</label><br>
-      <div class="inline-options">
-        <div class="option"><label><input type="checkbox" name="demo" value="Studio"><span>Studio</span></label></div>
-        <div class="option"><label><input type="checkbox" name="demo" value="Streaming"><span>Streaming</span></label></div>
-        <div class="option"><label><input type="checkbox" name="demo" value="Live"><span>Live</span></label></div>
-      </div>
+    <section>
+      <h2>6) International transfers</h2>
+      <p>When data is transferred outside the EU/EEA, we rely on safeguards such as the EU Standard Contractual Clauses and provider measures.</p>
+    </section>
 
-      <label class="question-label">Are you a…</label>
-      <div class="inline-options">
-        <div class="option"><label><input type="checkbox" name="role" value="Sound Engineer"><span>Sound Engineer</span></label></div>
-        <div class="option"><label><input type="checkbox" name="role" value="Music Producer"><span>Music Producer</span></label></div>
-        <div class="option"><label><input type="checkbox" name="role" value="Systems Engineer"><span>Systems Engineer</span></label></div>
-        <div class="option"><label><input type="checkbox" name="role" value="Event Producer"><span>Event Producer</span></label></div>
-        <div class="option"><label><input type="checkbox" name="role" value="Independent Artist"><span>Independent Artist</span></label></div>
-      </div>
-      <input type="text" name="role_other" placeholder="Other...">
-      
-      <label class="question-label">How many years of experience do you have in your field?</label>
-      <div class="inline-options">
-        <div class="option"><label><input type="radio" name="experience_years" value="Less than 1 year"><span>Less than 1 year</span></label></div>
-        <div class="option"><label><input type="radio" name="experience_years" value="1–3 years"><span>1–3 years</span></label></div>
-        <div class="option"><label><input type="radio" name="experience_years" value="3–7 years"><span>3–7 years</span></label></div>
-        <div class="option"><label><input type="radio" name="experience_years" value="Over 7 years"><span>Over 7 years</span></label></div>
-      </div>
+    <section>
+      <h2>7) Retention</h2>
+      <p>We keep data for the beta duration and up to <strong>12 months after</strong> it ends, unless you request earlier deletion. Then we delete or anonymize.</p>
+    </section>
 
-      <label class="question-label">Which platforms, tools, or DAWs do you use the most in your workflow?</label><br>
-      <textarea name="platforms"></textarea><br>
+    <section>
+      <h2>8) Your rights</h2>
+      <ul>
+        <li>Access, rectification, erasure, restriction, portability, objection</li>
+        <li>Withdraw consent at any time</li>
+      </ul>
+      <p>Contact <a href="mailto:j2latencyfix@gmail.com">j2latencyfix@gmail.com</a>. You can also complain to the Swedish Authority for Privacy Protection (IMY).</p>
+    </section>
 
-      <label class="question-label">How often do you experience audio latency in your workflow?</label><br>
-      <select name="latency_frequency">
-        <option value="" disabled selected>Select one…</option>
-        <option>Never</option>
-        <option>Rarely</option>
-        <option>Sometimes</option>
-        <option>Often</option>
-        <option>Always</option>
-      </select><br>
+    <section>
+      <h2>9) Security</h2>
+      <p>We apply reasonable technical/organizational measures (TLS, access limits, data minimization). No method is 100% secure, but we strive to protect your data.</p>
+    </section>
 
-      <label class="question-label">What do you currently do to handle audio latency in your workflow?</label><br>
-      <textarea name="latency_handling"></textarea><br>
+    <section>
+      <h2>10) Cookies &amp; analytics</h2>
+      <p>No tracking cookies or analytics are used here. If we add them, we’ll update this page and show a consent banner if required.</p>
+    </section>
 
-      <label class="question-label">How disruptive is latency to your workflow?</label><br>
-      <select name="latency_disruption">
-        <option value="" disabled selected>Select one…</option>
-        <option>Not disruptive</option>
-        <option>Slightly disruptive</option>
-        <option>Moderately disruptive</option>
-        <option>Very disruptive</option>
-        <option>Extremely disruptive</option>
-      </select><br>
+    <section>
+      <h2>11) Changes</h2>
+      <p>We may update this policy; material changes will be noted with a new effective date.</p>
+    </section>
 
-      <label class="question-label">How does latency affect the productivity, creative flow, and quality of the recording?</label><br>
-      <select name="latency_productivity">
-        <option value="" disabled selected>Select one…</option>
-        <option>No effect</option>
-        <option>Slightly decreases</option>
-        <option>Moderately decreases</option>
-        <option>Severely decreases</option>
-        <option>Stops workflow entirely</option>
-      </select><br>
+    <section>
+      <h2>12) Contact</h2>
+      <p>Email <a href="mailto:j2latencyfix@gmail.com">j2latencyfix@gmail.com</a> for any privacy requests or questions.</p>
+    </section>
+  </main>
 
-      <label class="question-label">Have latency issues ever cost you a client or deadline?</label><br>
-      <select name="latency_impact">
-        <option>Yes</option>
-        <option>No</option>
-      </select><br>
-
-      <label class="question-label">Do latency issues affect your confidence in your setup?</label><br>
-      <select name="latency_confidence">
-        <option>Yes</option>
-        <option>No</option>
-        <option>Sometimes</option>
-      </select><br>
-
-      <label class="question-label">Would you pay for a tool that automatically syncs latency?</label><br>
-      <select name="pay_interest">
-        <option>Yes</option>
-        <option>No</option>
-        <option>Maybe / Depends on price</option>
-      </select><br>
-
-      <label class="question-label">What price would be acceptable?</label><br>
-      <select name="price_range">
-        <option value="" disabled selected>Select one…</option>
-        <option>Under $20/month</option>
-        <option>$20–49/month</option>
-        <option>$50–99/month</option>
-        <option>$100 or more</option>
-        <option>I prefer paying per project</option>
-        <option>I prefer a one-time license</option>
-      </select><br>
-
-      <label class="question-label">How urgently would you want a solution?</label><br>
-      <select name="urgency">
-        <option value="" disabled selected>Select one…</option>
-        <option>Not urgent</option>
-        <option>Slightly urgent</option>
-        <option>Moderately urgent</option>
-        <option>Very urgent</option>
-        <option>Extremely urgent – I’d download it today</option>
-      </select><br>
-
-      <label class="question-label">Have you used or heard of similar plugins?</label><br>
-      <select name="used_similar">
-        <option>Yes</option>
-        <option>No</option>
-      </select><br>
-
-      <label class="question-label">If yes, which ones?</label><br>
-      <input type="text" name="similar_plugin"><br><br>
-
-      <p class="muted" style="font-size:0.9rem; line-height:1.4; margin-top:1rem;">
-        <strong>Data protection notice:</strong> Your responses are collected solely for
-        participation in the LatencyFix beta program. We use this information to contact
-        you about access to the demo, gather feedback, and share relevant updates.
-        Data is processed under the GDPR on the basis of your consent and handled only
-        by the LatencyFix development team. You may request deletion of your data at any time
-        by emailing <a href="mailto:j2latencyfix@gmail.com">j2latencyfix@gmail.com</a>.
-        Read our <a href="/LatencyFix/privacy.html" target="_blank">Privacy & Data Policy</a>.
-      </p>
-      
-      <!-- Consent (required) -->
-      <label class="question-label">
-        <input type="checkbox" name="consent" value="yes" required>
-        I agree to be contacted about the LatencyFix beta and downloads.
-      </label>
-
-      <button type="submit">Submit</button>
-    </form>
-
-    <!-- Gate shown after successful submission -->
-    <div id="download-gate" class="download-panel" hidden>
-      <strong>Thanks! Your request has been received.</strong>
-      <p class="muted" style="margin-top:.4rem;">
-        You’ll receive an <b>email with your personal demo download link</b> shortly.
-        Meanwhile, you can download the <b>User Manual</b> here:
-      </p>
-      <div class="download-actions">
-        <!-- TODO: replace href with your real manual URL (e.g., GitHub Release asset) -->
-        <a class="btn btn-primary" id="manual-link" href="LatencyFix-User-Manual.pdf" download>
-          Download User Manual (PDF)
-        </a>
-      </div>
-    </div>
-    
-    <!-- Status message under the submit button -->
-    <div id="formStatus" class="muted" role="status" aria-live="polite" style="margin-top:.6rem;"></div>
-    
-  </section>
-
-  <footer>
-    &copy; 2025 J² / LatencyFix. All rights reserved.<br>
-    <a href="privacy.html" style="color:var(--secondary-color)">Privacy & Data Policy</a> |
-    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:var(--secondary-color)">
-      CC BY-NC-ND 4.0 License
-    </a>
-  </footer>
-
-  <script>
-  (function(){
-    const form   = document.getElementById('beta-form');   // <-- keep your existing form id
-    const status = document.getElementById('formStatus');
-    const gate   = document.getElementById('download-gate');
-  
-    if(!form) return;
-  
-    // 1) Make fields required (by name)
-    const requiredSingles = [
-      'name','email','experience_years','platforms','latency_frequency',
-      'latency_handling','latency_disruption','latency_productivity',
-      'latency_impact','latency_confidence','pay_interest','price_range',
-      'urgency','used_similar','consent'
-    ];
-    requiredSingles.forEach(n => {
-      const els = form.querySelectorAll(`[name="${n}"]`);
-      els.forEach(el => el.setAttribute('required','required'));
-    });
-  
-    // 2) Helpers to validate checkbox groups
-    function atLeastOneChecked(name){
-      return !!form.querySelector(`input[name="${name}"]:checked`);
-    }
-    function requireGroup(name, label){
-      if(atLeastOneChecked(name)) return true;
-      alert(`Please select at least one option for "${label}".`);
-      // Focus first input of the group to help the user
-      const first = form.querySelector(`input[name="${name}"]`);
-      if(first) first.focus();
-      return false;
-    }
-  
-    // 3) Submit handler (Formspree)
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-  
-      // Built-in validation for singles
-      if(!form.checkValidity()){
-        form.reportValidity();
-        return;
-      }
-      // Group validations
-      if(!requireGroup('demo','Request a demo')) return;
-      if(!requireGroup('role','Are you a…')) return;
-  
-      status.textContent = 'Submitting…';
-  
-      try{
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-  
-        if(res.ok){
-          status.textContent = 'Thanks! Form received.';
-          // Reveal the gated panel
-          if(gate) gate.hidden = false;
-          // Optional: scroll to the gate
-          if(gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
-          // Reset inputs (keeps gate visible)
-          form.reset();
-        }else{
-          status.textContent = 'Submission failed. Please try again or email us.';
-        }
-      }catch(err){
-        status.textContent = 'Network error. Please try again.';
-      }
-    });
-  })();
-  </script>
-            
+  <div class="foot">
+    &copy; 2025 J&sup2; / LatencyFix — <a href="index.html">Home</a>
+  </div>
 </body>
 </html>
