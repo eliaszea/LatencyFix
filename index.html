@@ -165,17 +165,28 @@
       letter-spacing: .02em;
     }
     
-    /* Inputs on dark backgrounds: subtle focus state */
+    /* Form fields on metallic background */
     input, textarea, select {
-      background: #1e1e1e;
+      background: #2b2b2b;               /* lighter gray, visible on #1e1e1e */
       color: #fff;
-      border: 1px solid #333;
+      border: 1px solid #444;
       border-radius: 6px;
+      padding: 0.7rem;
+      font-size: 1rem;
     }
-    input:focus, textarea:focus, select:focus {
+    
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa;                       /* subtle hint text */
+    }
+    
+    input:focus,
+    textarea:focus,
+    select:focus {
       outline: none;
-      border-color: #4a4a4a;
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
+      border-color: #9dbba7;             /* pastel-green accent */
+      box-shadow: 0 0 0 2px rgba(157,187,167,0.3);
+      background: #333;                  /* slight lift on focus */
     }
 
     /* Avatar mask with zoom control */
