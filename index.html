@@ -146,13 +146,50 @@
       white-space: nowrap;
     }
     
+    /* Professional labels on dark background */
     .question-label {
       display: block;
-      font-weight: bold;
-      color: #00f3a0;
-      margin-top: 1.5rem;
+      font-weight: 600;
+      color: #e6e6e6;        /* soft neutral instead of bright green */
+      margin: 1.25rem 0 .5rem;
+      letter-spacing: .02em;
+    }
+    
+    /* Inputs on dark backgrounds: subtle focus state */
+    input, textarea, select {
+      background: #1e1e1e;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 6px;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #4a4a4a;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
     }
 
+    /* Avatar mask with zoom control */
+    .team-member .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;          /* hides edges when we zoom */
+      margin: 0 auto 1rem;       /* keeps layout like before */
+    }
+    
+    /* Use --avatar-zoom on the wrapper to control crop amount */
+    .team-member .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;         /* fills the circle */
+      transform: scale(var(--avatar-zoom, 1.0));
+      transform-origin: center;
+      filter: grayscale(100%);   /* preserves your grayscale look */
+    }
+    
+    /* OPTIONAL: tweak existing rule so it doesn’t fight with the wrapper */
+    .team-member img { border-radius: 0; }  /* we now mask via .avatar */
+    
     /* --- Screenshots grid --- */
     .media-grid {
     display: grid;
@@ -330,25 +367,27 @@
     <div class="team-grid">
       <div class="team-member">
         <img src="Team-Elias.jpeg" alt="Elias Zea">
-        <h3>Elias Zea, PhD</h3>
+        <h3>Elias Zea</h3>
         <p>Founder / Technical Lead / R&D & Administrative Lead</p>
         <p>Acoustics & AI Scientist</p>
       </div>
       <div class="team-member">
-        <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
-        <h3>Genaro Mosquera, MSEng</h3>
+        <div class="avatar" style="--avatar-zoom:1.05">
+          <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
+        </div>
+        <h3>Genaro Mosquera</h3>
         <p>Founder / Product Development Lead</p>
         <p>Sound & Music Production Engineer</p>
       </div>
       <div class="team-member">
         <img src="Team-Aruana.jpeg" alt="Aruana Rosa">
-        <h3>Aruana Rosa, PhD</h3>
-        <p>Founder / Business Strategy & Commercial Lead</p>
+        <h3>Aruana Rosa</h3>
+        <p>Founder / Business & Commercial Lead</p>
         <p>Business & Innovation Strategist</p>
       </div>
       <div class="team-member">
         <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
-        <h3>Silvin Willemsen, PhD</h3>
+        <h3>Silvin Willemsen</h3>
         <p>Founding Software Engineer</p>
         <p>Audio Plugin Developer</p>
       </div>
@@ -396,6 +435,7 @@
 
       <label class="question-label">How often do you experience audio latency in your workflow?</label><br>
       <select name="latency_frequency">
+        <option value="" disabled selected>Select one…</option>
         <option>Never</option>
         <option>Rarely</option>
         <option>Sometimes</option>
@@ -408,6 +448,7 @@
 
       <label class="question-label">How disruptive is latency to your workflow?</label><br>
       <select name="latency_disruption">
+        <option value="" disabled selected>Select one…</option>
         <option>Not disruptive</option>
         <option>Slightly disruptive</option>
         <option>Moderately disruptive</option>
@@ -417,6 +458,7 @@
 
       <label class="question-label">How does latency affect the productivity, creative flow, and quality of the recording?</label><br>
       <select name="latency_productivity">
+        <option value="" disabled selected>Select one…</option>
         <option>No effect</option>
         <option>Slightly decreases</option>
         <option>Moderately decreases</option>
@@ -446,6 +488,7 @@
 
       <label class="question-label">What price would be acceptable?</label><br>
       <select name="price_range">
+        <option value="" disabled selected>Select one…</option>
         <option>Under $20/month</option>
         <option>$20–49/month</option>
         <option>$50–99/month</option>
@@ -456,6 +499,7 @@
 
       <label class="question-label">How urgently would you want a solution?</label><br>
       <select name="urgency">
+        <option value="" disabled selected>Select one…</option>
         <option>Not urgent</option>
         <option>Slightly urgent</option>
         <option>Moderately urgent</option>
