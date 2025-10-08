@@ -310,6 +310,21 @@
     .btn-primary { background: var(--button-bg, #00f3a0); color: var(--button-text, #000); }
     .btn-ghost   { background: #000; color: #fff; border: 1px solid #333; }
     .muted { color: var(--secondary-color, #bbb); font-size: .95rem; }
+
+    input[disabled], textarea[disabled], select[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Consistent blue links */
+    a {
+      color: #7fe8ff;
+      text-decoration: none;
+    }
+    a:hover, a:focus {
+      text-decoration: underline;
+      color: #9fefff; /* slightly brighter on hover */
+    }
     
   </style>
 </head>
@@ -591,76 +606,90 @@
   </footer>
 
   <script>
-  (function(){
-    const form   = document.getElementById('beta-form');   // <-- keep your existing form id
-    const status = document.getElementById('formStatus');
-    const gate   = document.getElementById('download-gate');
-  
-    if(!form) return;
-  
-    // 1) Make fields required (by name)
-    const requiredSingles = [
-      'name','email','experience_years','platforms','latency_frequency',
-      'latency_handling','latency_disruption','latency_productivity',
-      'latency_impact','latency_confidence','pay_interest','price_range',
-      'urgency','used_similar','consent'
-    ];
-    requiredSingles.forEach(n => {
-      const els = form.querySelectorAll(`[name="${n}"]`);
-      els.forEach(el => el.setAttribute('required','required'));
-    });
-  
-    // 2) Helpers to validate checkbox groups
-    function atLeastOneChecked(name){
-      return !!form.querySelector(`input[name="${name}"]:checked`);
-    }
-    function requireGroup(name, label){
-      if(atLeastOneChecked(name)) return true;
-      alert(`Please select at least one option for "${label}".`);
-      // Focus first input of the group to help the user
-      const first = form.querySelector(`input[name="${name}"]`);
-      if(first) first.focus();
-      return false;
-    }
-  
-    // 3) Submit handler (Formspree)
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-  
-      // Built-in validation for singles
-      if(!form.checkValidity()){
-        form.reportValidity();
-        return;
+    (function(){
+      const form   = document.getElementById('beta-form');   // <-- keep your existing form id
+      const status = document.getElementById('formStatus');
+      const gate   = document.getElementById('download-gate');
+    
+      if(!form) return;
+    
+      // 1) Make fields required (by name)
+      const requiredSingles = [
+        'name','email','experience_years','platforms','latency_frequency',
+        'latency_handling','latency_disruption','latency_productivity',
+        'latency_impact','latency_confidence','pay_interest','price_range',
+        'urgency','used_similar','consent'
+      ];
+      requiredSingles.forEach(n => {
+        const els = form.querySelectorAll(`[name="${n}"]`);
+        els.forEach(el => el.setAttribute('required','required'));
+      });
+    
+      // 2) Helpers to validate checkbox groups
+      function atLeastOneChecked(name){
+        return !!form.querySelector(`input[name="${name}"]:checked`);
       }
-      // Group validations
-      if(!requireGroup('demo','Request a demo')) return;
-      if(!requireGroup('role','Are you a…')) return;
-  
-      status.textContent = 'Submitting…';
-  
-      try{
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-  
-        if(res.ok){
-          status.textContent = 'Thanks! Form received.';
-          // Reveal the gated panel
-          if(gate) gate.hidden = false;
-          // Optional: scroll to the gate
-          if(gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
-          // Reset inputs (keeps gate visible)
-          form.reset();
-        }else{
-          status.textContent = 'Submission failed. Please try again or email us.';
+      function requireGroup(name, label){
+        if(atLeastOneChecked(name)) return true;
+        alert(`Please select at least one option for "${label}".`);
+        // Focus first input of the group to help the user
+        const first = form.querySelector(`input[name="${name}"]`);
+        if(first) first.focus();
+        return false;
+      }
+    
+      // 3) Submit handler (Formspree)
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+    
+        // Built-in validation for singles
+        if(!form.checkValidity()){
+          form.reportValidity();
+          return;
         }
-      }catch(err){
-        status.textContent = 'Network error. Please try again.';
-      }
-    });
-  })();
+        // Group validations
+        if(!requireGroup('demo','Request a demo')) return;
+        if(!requireGroup('role','Are you a…')) return;
+    
+        status.textContent = 'Submitting…';
+    
+        try{
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+    
+          if(res.ok){
+            status.textContent = 'Thanks! Form received.';
+            // Reveal the gated panel
+            if(gate) gate.hidden = false;
+            // Optional: scroll to the gate
+            if(gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
+            // Reset inputs (keeps gate visible)
+            form.reset();
+          }else{
+            status.textContent = 'Submission failed. Please try again or email us.';
+          }
+        }catch(err){
+          status.textContent = 'Network error. Please try again.';
+        }
+      });
+    })();
+
+    // --- disable "similar_plugin" if user selects "No" ---
+    const usedSimilarSelect = form.querySelector('select[name="used_similar"]');
+    const similarInput = form.querySelector('input[name="similar_plugin"]');
+    if (usedSimilarSelect && similarInput) {
+      const toggleSimilar = () => {
+        const val = usedSimilarSelect.value;
+        const disable = (val.toLowerCase() === 'no' || val === '');
+        similarInput.disabled = disable;
+        if (disable) similarInput.value = ''; // clear if switching to No
+      };
+      usedSimilarSelect.addEventListener('change', toggleSimilar);
+      toggleSimilar(); // initial state on load
+    }
   </script>
             
 </body>
