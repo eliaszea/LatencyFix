@@ -316,10 +316,11 @@
         <h2>Technical specifications</h2>
         <ul>
           <li>Precision: &lt; 20 &micro;s</li>
-          <li>Sample rates : up to 192 kHz</li>
+          <li>Sample rates: up to 192 kHz</li>
           <li>Bit depth: 64 bits (floating point)</li>
           <li>Channels: mono and stereo</li>
-          <li>Compatible DAWs: Pro Tools (and others to come!)</li>
+          <li>Compatible DAWs: Pro Tools (and others soon to come!)</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -329,30 +330,34 @@
     <div class="team-grid">
       <div class="team-member">
         <img src="Team-Elias.jpeg" alt="Elias Zea">
-        <h3>Dr. Elias Zea</h3>
+        <h3>Elias Zea, PhD</h3>
         <p>Founder / Technical Lead / R&D & Administrative Lead</p>
+        <p>Acoustics & AI Scientist</p>
       </div>
       <div class="team-member">
         <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
-        <h3>MS. Eng. Genaro Mosquera</h3>
+        <h3>Genaro Mosquera, MSEng</h3>
         <p>Founder / Product Development Lead</p>
+        <p>Sound & Music Production Engineer</p>
       </div>
       <div class="team-member">
         <img src="Team-Aruana.jpeg" alt="Aruana Rosa">
-        <h3>Dr. Aruana Rosa</h3>
+        <h3>Aruana Rosa, PhD</h3>
         <p>Founder / Business Strategy & Commercial Lead</p>
+        <p>Business & Innovation Strategist</p>
       </div>
       <div class="team-member">
         <img src="Team-Silvin.jpeg" alt="Silvin Willemsen">
-        <h3>Dr. Silvin Willemsen</h3>
+        <h3>Silvin Willemsen, PhD</h3>
+        <p>Founding Software Engineer</p>
         <p>Audio Plugin Developer</p>
       </div>
     </div>
   </section>
 
   <section class="section cta">
-    <h2>Join the Beta</h2>
-    <p>Be among the first to experience seamless audio sync. Sign up now to test LatencyFix in your own studio or stage setup.</p>
+    <h2>Request demo</h2>
+    <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
     <form action="https://formspree.io/f/xqaqoyzb" method="POST">
       
       <label for="name">Name</label>
@@ -467,6 +472,12 @@
       <label class="question-label">If yes, which ones?</label><br>
       <input type="text" name="similar_plugin"><br><br>
 
+      <!-- Consent (required) -->
+      <label class="question-label">
+        <input type="checkbox" name="consent" value="yes" required>
+        I agree to be contacted about the LatencyFix beta and downloads.
+      </label>
+
       <button type="submit">Submit</button>
     </form>
 
@@ -495,68 +506,6 @@
     This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.<br />
     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color: var(--secondary-color);">View License</a>
   </footer>
-
-  <script>
-    (function(){
-      const root   = document.getElementById('lf-slideshow');
-      if(!root) return;
-  
-      const slides = Array.from(root.querySelectorAll('.slide'));
-      const dots   = Array.from(root.querySelectorAll('.slide-dot'));
-      const prev   = root.querySelector('.slide-prev');
-      const next   = root.querySelector('.slide-next');
-  
-      let i = 0;
-      const N = slides.length;
-      let timer = null;
-      const INTERVAL_MS = 5000;
-  
-      function show(idx){
-        i = (idx + N) % N;
-        slides.forEach((s, k) => {
-          s.classList.toggle('is-active', k === i);
-          s.setAttribute('aria-hidden', k === i ? 'false' : 'true');
-        });
-        dots.forEach((d, k) => {
-          d.classList.toggle('is-active', k === i);
-          d.setAttribute('aria-selected', k === i ? 'true' : 'false');
-        });
-      }
-  
-      function nextSlide(){ show(i + 1); }
-      function prevSlide(){ show(i - 1); }
-  
-      function start(){
-        stop();
-        timer = setInterval(nextSlide, INTERVAL_MS);
-      }
-      function stop(){
-        if(timer){ clearInterval(timer); timer = null; }
-      }
-  
-      // events
-      next.addEventListener('click', ()=>{ nextSlide(); start(); });
-      prev.addEventListener('click', ()=>{ prevSlide(); start(); });
-      dots.forEach((d, k) => d.addEventListener('click', () => { show(k); start(); }));
-  
-      // pause on hover / focus for accessibility
-      root.addEventListener('mouseenter', stop);
-      root.addEventListener('mouseleave', start);
-      root.addEventListener('focusin',  stop);
-      root.addEventListener('focusout', start);
-  
-      // keyboard arrows
-      root.addEventListener('keydown', (e)=>{
-        if(e.key === 'ArrowRight'){ e.preventDefault(); nextSlide(); start(); }
-        if(e.key === 'ArrowLeft'){  e.preventDefault(); prevSlide(); start(); }
-      });
-      root.setAttribute('tabindex', '0');
-  
-      // init
-      show(0);
-      start();
-    })();
-  </script>
 
   <script>
   (function(){
