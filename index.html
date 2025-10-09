@@ -686,9 +686,10 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
     
-        // Browser + group validations
+        // browser-level required checks
         if (!form.checkValidity()) { form.reportValidity(); return; }
-        if (!requireGroup('demo','Request a demo')) return;
+        // group checks
+        if (!requireGroup('demo','Will you test the demo for...')) return;
         if (!requireGroup('role','Are you a…')) return;
     
         status.textContent = 'Submitting…';
@@ -708,7 +709,7 @@
           });
     
           // 2) EMAIL via your Netlify Function (secure link)
-          const res = await fetch('/.netlify/functions/formspree-webhook', {
+          const res = await fetch('/.netlify/functions/send-demo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(Object.fromEntries(fd))
