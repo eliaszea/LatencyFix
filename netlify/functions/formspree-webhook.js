@@ -1,7 +1,6 @@
-// netlify/functions/formspree-webhook.js
+// netlify/functions/send-demo.js  (or keep your existing filename)
 import crypto from "crypto";
 
-// --- helpers: base64url, HMAC signing, token encode/decode ---
 const b64url = (buf) =>
   Buffer.from(buf).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 
@@ -15,18 +14,16 @@ function sign(payload, secret) {
   return `${data}.${sig}`;
 }
 
-export default async (req, context) => {
-  if (req.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405 });
-  }
+export default async (req) => {
+  if (req.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
 
   const {
     RESEND_API_KEY,
     DEMO_ASSET_URL,
     MANUAL_URL,
     TOKEN_SECRET,
-    TOKEN_TTL_HOURS = "72",
-    FROM_EMAIL = "no-reply@example.com",
+    TOKEN_TTL_HOURS = "24",
+    FROM_EMAIL = "LatencyFix <no-reply@resend.dev>",
     BRAND_NAME = "LatencyFix",
   } = process.env;
 
@@ -34,28 +31,34 @@ export default async (req, context) => {
     return new Response("Missing server configuration", { status: 500 });
   }
 
-  const body = await req.json().catch(() => ({}));
+  let body = {};
+  try {
+    body = await req.json();
+  } catch {}
 
-  // Formspree typically sends fields under body with same names as your form's inputs
-  const email = (body.email || "").trim();
-  const name = (body.name || "").trim();
-
-  if (!email) {
-    return new Response("Missing email", { status: 400 });
+  // 1) Honeypot check (ignore bots)
+  if ((body["bot-field"] || "").trim() !== "") {
+    // Pretend success to avoid tipping off bots
+    return new Response(JSON.stringify({ ok: true }), { status: 200 });
   }
 
-  // Build an expiring token (no DB): exp = now + TTL
+  // 2) Pull main fields
+  const email = (body.email || "").trim();
+  const name  = (body.name  || "").trim();
+
+  if (!email) return new Response("Missing email", { status: 400 });
+
+  // 3) Build expiring token
   const ttlHours = parseInt(String(TOKEN_TTL_HOURS), 10) || 72;
   const exp = Math.floor(Date.now() / 1000) + ttlHours * 3600;
   const tokenPayload = { sub: email, exp, iss: "latencyfix", v: 1 };
   const token = sign(tokenPayload, TOKEN_SECRET);
 
   const siteURL = new URL(req.url);
-  // Root of site (e.g., https://yoursite.netlify.app)
   const origin = `${siteURL.protocol}//${siteURL.host}`;
   const downloadURL = `${origin}/.netlify/functions/download?token=${encodeURIComponent(token)}`;
 
-  // Compose email (simple HTML)
+  // 4) Compose email
   const html = `
   <div style="font-family:Arial,Helvetica,sans-serif; line-height:1.5; color:#111">
     <p>Hi${name ? " " + name : ""},</p>
@@ -63,18 +66,16 @@ export default async (req, context) => {
     <p>
       <a href="${downloadURL}" style="background:#9dbba7;color:#000;padding:10px 14px;border-radius:6px;text-decoration:none;display:inline-block">
         Download your demo
-      </a>
-      <br/><small>This link expires in ${ttlHours} hours.</small>
+      </a><br/>
+      <small>This link expires in ${ttlHours} hours.</small>
     </p>
-    <p>You can also download the User Manual here:<br/>
-      <a href="${MANUAL_URL}">${MANUAL_URL}</a>
-    </p>
+    ${MANUAL_URL ? `<p>User Manual: <a href="${MANUAL_URL}">${MANUAL_URL}</a></p>` : ""}
     <hr style="border:none;border-top:1px solid #ddd;margin:16px 0"/>
     <p>If you didn’t request this, you can ignore this email.</p>
   </div>`.trim();
 
-  // Send via Resend REST
-  const resendRes = await fetch("https://api.resend.com/emails", {
+  // 5) Send with Resend
+  const rsp = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${RESEND_API_KEY}`,
@@ -88,8 +89,8 @@ export default async (req, context) => {
     }),
   });
 
-  if (!resendRes.ok) {
-    const msg = await resendRes.text();
+  if (!rsp.ok) {
+    const msg = await rsp.text().catch(() => "");
     return new Response(`Email send failed: ${msg}`, { status: 502 });
   }
 
