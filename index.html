@@ -465,7 +465,12 @@
   <section class="section cta">
     <h2>Request demo</h2>
     <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
-    <form id="beta-form" method="POST">
+    <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      
+      <!-- Netlify Forms requires this hidden form-name field -->
+      <input type="hidden" name="form-name" value="beta-signup">
+      <!-- Simple spam trap (Netlify honeypot) -->
+      <input type="text" name="bot-field" style="position:absolute;left:-10000px;opacity:0" tabindex="-1" autocomplete="off">
       
       <label for="name">Name</label>
       <input type="text" name="name" id="name" placeholder="Your full name" required><br><br>
@@ -479,7 +484,7 @@
         <div class="option"><label><input type="checkbox" name="demo" value="Streaming"><span>Streaming</span></label></div>
         <div class="option"><label><input type="checkbox" name="demo" value="Live"><span>Live</span></label></div>
       </div>
-      <input type="text" name="role_other" placeholder="Other...">
+      <input type="text" name="demo_other" placeholder="Other...">
 
       <label class="question-label">Are you a…</label>
       <div class="inline-options">
@@ -640,7 +645,7 @@
     
       if (!form) return;
     
-      // 1) Make fields required (by name)
+      // Mark required singles
       const requiredSingles = [
         'name','email','experience_years','platforms','latency_frequency',
         'latency_handling','latency_disruption','latency_productivity',
@@ -648,15 +653,12 @@
         'urgency','used_similar','consent'
       ];
       requiredSingles.forEach(n => {
-        const els = form.querySelectorAll(`[name="${n}"]`);
-        els.forEach(el => el.setAttribute('required','required'));
+        form.querySelectorAll(`[name="${n}"]`).forEach(el => el.setAttribute('required','required'));
       });
     
-      // 2) Helpers to validate checkbox groups
-      function atLeastOneChecked(name) {
-        return !!form.querySelector(`input[name="${name}"]:checked`);
-      }
-      function requireGroup(name, label) {
+      // Group validations
+      function atLeastOneChecked(name){ return !!form.querySelector(`input[name="${name}"]:checked`); }
+      function requireGroup(name, label){
         if (atLeastOneChecked(name)) return true;
         alert(`Please select at least one option for "${label}".`);
         const first = form.querySelector(`input[name="${name}"]`);
@@ -664,7 +666,7 @@
         return false;
       }
     
-      // 3) Disable "similar_plugin" when used_similar = No
+      // Disable "similar_plugin" when used_similar = No
       const usedSimilarSelect = form.querySelector('select[name="used_similar"]');
       const similarInput      = form.querySelector('input[name="similar_plugin"]');
       if (usedSimilarSelect && similarInput) {
@@ -675,31 +677,41 @@
           if (disable) similarInput.value = '';
         };
         usedSimilarSelect.addEventListener('change', toggleSimilar);
-        toggleSimilar(); // initial state
+        toggleSimilar();
       }
     
-      // 4) Submit handler —> POST directly to your Netlify Function
+      // Helper to x-www-form-urlencoded encode for Netlify Forms
+      const encode = (obj) => new URLSearchParams(obj).toString();
+    
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
     
-        // Built-in validation for singles
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-        // Group validations
-        if (!requireGroup('demo', 'Request a demo')) return;
-        if (!requireGroup('role', 'Are you a…')) return;
+        // Browser + group validations
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        if (!requireGroup('demo','Request a demo')) return;
+        if (!requireGroup('role','Are you a…')) return;
     
         status.textContent = 'Submitting…';
     
         try {
-          const payload = Object.fromEntries(new FormData(form).entries());
+          // Build form payload once
+          const fd = new FormData(form);
+          // Netlify Forms needs form-name present (it is, via hidden input)
+          if (!fd.get('form-name')) fd.set('form-name', form.getAttribute('name') || 'beta-signup');
     
+          // 1) STORE in Netlify Forms (so you can export CSV later)
+          // POST to current page "/" with x-www-form-urlencoded body as per Netlify docs
+          await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encode(Object.fromEntries(fd))
+          });
+    
+          // 2) EMAIL via your Netlify Function (secure link)
           const res = await fetch('/.netlify/functions/formspree-webhook', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(Object.fromEntries(fd))
           });
     
           if (res.ok) {
@@ -707,14 +719,13 @@
             if (gate) gate.hidden = false;
             if (gate) window.scrollTo({ top: gate.offsetTop - 16, behavior: 'smooth' });
             form.reset();
-            // ensure the similar field re-disables after reset
             if (usedSimilarSelect && similarInput) {
               usedSimilarSelect.value = '';
               similarInput.disabled = true;
             }
           } else {
-            const msg = await res.text().catch(() => '');
-            status.textContent = 'Submission failed. Please try again.' + (msg ? ` (${msg})` : '');
+            const msg = await res.text().catch(()=> '');
+            status.textContent = 'Submission stored, but email failed. Please contact us.' + (msg ? ` (${msg})` : '');
           }
         } catch (err) {
           status.textContent = 'Network error. Please try again.';
