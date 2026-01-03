@@ -5,3 +5,9 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+[[redirects]]
+  from = "https://latencyfix.netlify.app/*"
+  to = "https://www.latency-fix.com/:splat"
+  status = 301
+  force = true
