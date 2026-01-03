@@ -84,6 +84,7 @@ export default async (req) => {
     body: JSON.stringify({
       from: FROM_EMAIL,
       to: [email],
+      reply_to: "contact@latency-fix.com",
       subject: `${BRAND_NAME} demo link`,
       html,
     }),
