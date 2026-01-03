@@ -23,7 +23,7 @@ export default async (req) => {
     MANUAL_URL,
     TOKEN_SECRET,
     TOKEN_TTL_HOURS = "24",
-    FROM_EMAIL = "LatencyFix <no-reply@resend.dev>",
+    FROM_EMAIL = "LatencyFix <no-reply@emails.latency-fix.com>",
     BRAND_NAME = "LatencyFix",
   } = process.env;
 
