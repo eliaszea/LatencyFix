@@ -491,7 +491,7 @@
   <section class="section cta">
     <h2>Request demo</h2>
     <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
-    <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
       
       <!-- Netlify Forms requires this hidden form-name field -->
       <input type="hidden" name="form-name" value="beta-signup">
@@ -632,6 +632,8 @@
         I agree to be contacted about the LatencyFix beta and downloads.
       </label>
 
+      <div data-netlify-recaptcha="true"></div>
+      
       <button type="submit">Submit</button>
     </form>
 
