@@ -364,6 +364,21 @@
       border: 0;
       border-radius: 12px;
     }
+
+    /* Panels: don't use [hidden] for reCAPTCHA areas; collapse instead */
+    .panel {
+      max-height: 5000px;        /* big enough for your long demo form */
+      opacity: 1;
+      overflow: visible;
+      transition: opacity .15s ease, max-height .15s ease;
+    }
+    
+    .panel.is-hidden {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
     
   </style>
 </head>
@@ -502,7 +517,7 @@
   <!-- ========================= -->
   <!-- DEMO PANEL (UNCHANGED FORM) -->
   <!-- ========================= -->
-  <div id="demo-panel">
+  <div id="demo-panel" class="panel">
     <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
       
       <!-- Netlify Forms requires this hidden form-name field -->
@@ -670,7 +685,7 @@
   <!-- ========================= -->
   <!-- CONTACT PANEL (NEW FORM)  -->
   <!-- ========================= -->
-  <div id="contact-panel" hidden>
+  <div id="contact-panel" class="panel is-hidden">
     <form id="contact-form"
           name="contact"
           method="POST"
@@ -729,8 +744,8 @@
 
         // Toggle panels
         const isDemo = mode === 'demo';
-        demoPanel.hidden = !isDemo;
-        contactPanel.hidden = isDemo;
+        demoPanel.classList.toggle('is-hidden', !isDemo);
+        contactPanel.classList.toggle('is-hidden', isDemo);
 
         // Active button styling (optional)
         btnDemo?.classList.toggle('active', isDemo);
