@@ -438,7 +438,7 @@
         <h2>System requirements</h2>
           <ul>
             <li><strong>Operating System:</strong> macOS 10.6 or newer</li>
-            <li><strong>Digital Audio Workstation (DAW):</strong> Requires <em>Avid Pro Tools</em> (2022.12 or later)</li>
+            <li><strong>DAW:</strong> <em>Avid Pro Tools</em> (2022.12 or later). Multi-DAW roadmap</li>
             <li><strong>Processor:</strong> Intel i5 or Apple Silicon equivalent (2 GHz or higher)</li>
             <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
             <li><strong>Disk space:</strong> 13.1 MB</li>
@@ -446,7 +446,7 @@
           </ul>
         <h2>Technical specifications</h2>
         <ul>
-          <li><strong>Plugin formats:</strong> AU, VST 2.4, VST 3, AAX, RTAS</li>
+          <li><strong>Plugin formats:</strong> VST 2.4/3, AAX, AU, RTAS</li>
           <li><strong>Sample rates:</strong> up to 192 kHz</li>
           <li><strong>Bit depth:</strong> 64 bits (floating point)</li>
           <li><strong>Channels:</strong> mono and stereo</li>
@@ -461,21 +461,21 @@
     <div class="team-grid">
       <div class="team-member">
         <img src="Team-Elias.jpeg" alt="Elias Zea">
-        <h3>Elias Zea</h3>
-        <p>Founder / Technical Lead / R&D & Administrative Lead</p>
+        <h3>Elias Zea, CTO</h3>
+        <p>Founder / Technical Lead</p>
         <p>Acoustics & AI Scientist</p>
       </div>
       <div class="team-member">
         <div class="avatar" style="--avatar-zoom:1.12">
           <img src="Team-Genaro.jpeg" alt="Genaro Mosquera">
         </div>
-        <h3>Genaro Mosquera</h3>
+        <h3>Genaro Mosquera, CPO</h3>
         <p>Founder / Product Development Lead</p>
         <p>Music Production, Mix & Mastering Engineer</p>
       </div>
       <div class="team-member">
           <img src="Team-Daniel.jpeg" alt="Daniel De Sousa">
-        <h3>Daniel De Sousa</h3>
+        <h3>Daniel De Sousa, CFO</h3>
         <p>Co-Founder / Business & Commercial Lead</p>
         <p>Music Business & Consultancy</p>
       </div>
@@ -489,8 +489,21 @@
   </section>
 
   <section class="section cta">
-    <h2>Request demo</h2>
-    <p>Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.</p>
+  <h2 id="cta-title">Request demo</h2>
+  <p id="cta-lead">
+    Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.
+  </p>
+
+  <!-- Switch buttons -->
+  <div class="cta-switch" style="display:flex; gap:.75rem; flex-wrap:wrap; margin:1rem 0 1.25rem;">
+    <button type="button" class="btn btn-secondary" id="show-contact">Contact us</button>
+    <button type="button" class="btn btn-primary" id="show-demo">Request demo</button>
+  </div>
+
+  <!-- ========================= -->
+  <!-- DEMO PANEL (UNCHANGED FORM) -->
+  <!-- ========================= -->
+  <div id="demo-panel">
     <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
       
       <!-- Netlify Forms requires this hidden form-name field -->
@@ -645,7 +658,6 @@
         Meanwhile, you can download the <b>User Manual</b> here:
       </p>
       <div class="download-actions">
-        <!-- TODO: replace href with your real manual URL (e.g., GitHub Release asset) -->
         <a class="btn btn-primary" id="manual-link" href="LatencyFix-User-Manual.pdf" download>
           Download User Manual (PDF)
         </a>
@@ -654,11 +666,103 @@
     
     <!-- Status message under the submit button -->
     <div id="formStatus" class="muted" role="status" aria-live="polite" style="margin-top:.6rem;"></div>
-    
-  </section>
+  </div>
+
+  <!-- ========================= -->
+  <!-- CONTACT PANEL (NEW FORM)  -->
+  <!-- ========================= -->
+  <div id="contact-panel" hidden>
+    <h2>Contact us</h2>
+    <p>Send us a quick message and we’ll get back to you.</p>
+
+    <form id="contact-form"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-recaptcha="true"
+          netlify-honeypot="bot-field-contact">
+      
+      <input type="hidden" name="form-name" value="contact">
+      <input type="text" name="bot-field-contact" style="position:absolute;left:-10000px;opacity:0" tabindex="-1" autocomplete="off">
+
+      <label for="contact-email">Email</label>
+      <input type="email" name="email" id="contact-email" placeholder="Your email address" required><br><br>
+
+      <label for="contact-message">Message</label>
+      <textarea name="message" id="contact-message" placeholder="How can we help?" required></textarea><br><br>
+
+      <div data-netlify-recaptcha="true"></div>
+
+      <button type="submit">Send message</button>
+    </form>
+
+    <div id="contactStatus" class="muted" role="status" aria-live="polite" style="margin-top:.6rem;"></div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- TOGGLE + (OPTIONAL) STATUS -->
+  <!-- ========================= -->
+  <script>
+    (function () {
+      const demoPanel = document.getElementById('demo-panel');
+      const contactPanel = document.getElementById('contact-panel');
+
+      const btnDemo = document.getElementById('show-demo');
+      const btnContact = document.getElementById('show-contact');
+
+      const title = document.getElementById('cta-title');
+      const lead = document.getElementById('cta-lead');
+
+      const demoTitle = 'Early-access demo';
+      const demoLead =
+        'Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.';
+
+      const contactTitle = 'Contact us';
+      const contactLead = 'Send us a quick message and we’ll get back to you.';
+
+      function showDemo() {
+        demoPanel.hidden = false;
+        contactPanel.hidden = true;
+        if (title) title.textContent = demoTitle;
+        if (lead) lead.textContent = demoLead;
+        btnDemo?.classList.add('active');
+        btnContact?.classList.remove('active');
+      }
+
+      function showContact() {
+        contactPanel.hidden = false;
+        demoPanel.hidden = true;
+        if (title) title.textContent = contactTitle;
+        if (lead) lead.textContent = contactLead;
+        btnContact?.classList.add('active');
+        btnDemo?.classList.remove('active');
+      }
+
+      btnDemo?.addEventListener('click', showDemo);
+      btnContact?.addEventListener('click', showContact);
+
+      // Default view
+      showDemo();
+
+      // Optional: allow direct linking with anchors
+      if (window.location.hash === '#contact') showContact();
+      if (window.location.hash === '#demo') showDemo();
+
+      // Optional: lightweight "sent" feedback for the contact form (no AJAX).
+      // This will show a friendly message on the next page load if Netlify redirects back.
+      // If you already have your own submit handler, you can remove this block.
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('contact') === 'success') {
+        const cs = document.getElementById('contactStatus');
+        if (cs) cs.textContent = 'Thanks! Your message has been sent.';
+        showContact();
+      }
+    })();
+  </script>
+</section>
 
   <footer>
-    &copy; 2026 J² / LatencyFix. All rights reserved.<br>
+    &copy; 2026 LatencyFix. All rights reserved.<br>
     <a href="privacy.html" style="color:var(--secondary-color)">Privacy & Data Policy</a> |
     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:var(--secondary-color)">
       CC BY-NC-ND 4.0 License
