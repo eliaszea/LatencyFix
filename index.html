@@ -370,7 +370,7 @@
   
 <body>
   <header>
-    <img src="logo.jpeg" alt="LatencyFix logo" />
+    <img src="latencyfix-logo.jpeg" alt="LatencyFix logo" />
     <p>Precision sync for studio, remote, and live audio collaboration</p>
   </header>
 
@@ -380,6 +380,7 @@
   </section>
 
   <section class="section">
+    <h2>Make the world your recording room</h2>
     <div class="video-embed">
       <iframe
         src="https://www.youtube.com/embed/FBn3ywvH184"
@@ -437,12 +438,12 @@
       <div class="showcase-right requirements">
         <h2>System requirements</h2>
           <ul>
-            <li><strong>Operating System:</strong> macOS 10.6 or newer</li>
-            <li><strong>DAW:</strong> <em>Avid Pro Tools</em> (2022.12 or later). Multi-DAW roadmap</li>
+            <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
+            <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
             <li><strong>Processor:</strong> Intel i5 or Apple Silicon equivalent (2 GHz or higher)</li>
             <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
             <li><strong>Disk space:</strong> 13.1 MB</li>
-            <li><strong>Audio Interface:</strong> ASIO or Core Audio compatible</li>
+            <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
           </ul>
         <h2>Technical specifications</h2>
         <ul>
@@ -694,7 +695,7 @@
   <!-- ========================= -->
   <!-- TOGGLE + (OPTIONAL) STATUS -->
   <!-- ========================= -->
-  <script>
+    <script>
     (function () {
       const demoPanel = document.getElementById('demo-panel');
       const contactPanel = document.getElementById('contact-panel');
@@ -702,53 +703,42 @@
       const btnDemo = document.getElementById('show-demo');
       const btnContact = document.getElementById('show-contact');
 
-      const title = document.getElementById('cta-title');
-      const lead = document.getElementById('cta-lead');
+      const titleEl = document.getElementById('cta-title');
+      const leadEl  = document.getElementById('cta-lead');
 
-      const demoTitle = 'Early-access demo';
-      const demoLead =
-        'Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.';
+      const copy = {
+        demo: {
+          title: 'Early-access demo',
+          lead: 'Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.'
+        },
+        contact: {
+          title: 'Contact us',
+          lead: 'Send us a quick message and we’ll get back to you.'
+        }
+      };
 
-      const contactTitle = 'Contact us';
-      const contactLead = 'Send us a quick message and we’ll get back to you.';
+      function setMode(mode) {
+        const c = copy[mode];
 
-      function showDemo() {
-        demoPanel.hidden = false;
-        contactPanel.hidden = true;
-        if (title) title.textContent = demoTitle;
-        if (lead) lead.textContent = demoLead;
-        btnDemo?.classList.add('active');
-        btnContact?.classList.remove('active');
+        // Update heading + lead
+        if (titleEl) titleEl.textContent = c.title;
+        if (leadEl)  leadEl.textContent  = c.lead;
+
+        // Toggle panels
+        const isDemo = mode === 'demo';
+        demoPanel.hidden = !isDemo;
+        contactPanel.hidden = isDemo;
+
+        // Active button styling (optional)
+        btnDemo?.classList.toggle('active', isDemo);
+        btnContact?.classList.toggle('active', !isDemo);
       }
 
-      function showContact() {
-        contactPanel.hidden = false;
-        demoPanel.hidden = true;
-        if (title) title.textContent = contactTitle;
-        if (lead) lead.textContent = contactLead;
-        btnContact?.classList.add('active');
-        btnDemo?.classList.remove('active');
-      }
+      btnDemo?.addEventListener('click',   () => setMode('demo'));
+      btnContact?.addEventListener('click',() => setMode('contact'));
 
-      btnDemo?.addEventListener('click', showDemo);
-      btnContact?.addEventListener('click', showContact);
-      
-      // Default view
-      showDemo();
-
-      // Optional: allow direct linking with anchors
-      if (window.location.hash === '#contact') showContact();
-      if (window.location.hash === '#demo') showDemo();
-
-      // Optional: lightweight "sent" feedback for the contact form (no AJAX).
-      // This will show a friendly message on the next page load if Netlify redirects back.
-      // If you already have your own submit handler, you can remove this block.
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('contact') === 'success') {
-        const cs = document.getElementById('contactStatus');
-        if (cs) cs.textContent = 'Thanks! Your message has been sent.';
-        showContact();
-      }
+      // Default
+      setMode(window.location.hash === '#contact' ? 'contact' : 'demo');
     })();
   </script>
 </section>
