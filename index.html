@@ -661,8 +661,6 @@
     
     <!-- Status message under the submit button -->
     <div id="formStatus" class="muted" role="status" aria-live="polite" style="margin-top:.6rem;"></div>
-  
-  </section>
   </div>
 
   <!-- ========================= -->
@@ -732,6 +730,9 @@
         btnDemo?.classList.remove('active');
       }
 
+      btnDemo?.addEventListener('click', showDemo);
+      btnContact?.addEventListener('click', showContact);
+      
       // Default view
       showDemo();
 
