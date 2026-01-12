@@ -462,7 +462,7 @@
       <div class="team-member">
         <img src="Team-Elias.jpeg" alt="Elias Zea">
         <h3>Elias Zea, CTO</h3>
-        <p>Founder / Technical Lead</p>
+        <p>Founder / Technical R&D and Admin Lead</p>
         <p>Acoustics & AI Scientist</p>
       </div>
       <div class="team-member">
@@ -489,11 +489,6 @@
   </section>
 
   <section class="section cta">
-  <h2 id="cta-title">Request demo</h2>
-  <p id="cta-lead">
-    Be among the first to experience seamless audio sync. Fill out the form below and download the demo to test LatencyFix now in your own studio or stage setup.
-  </p>
-
   <!-- Switch buttons -->
   <div class="cta-switch" style="display:flex; gap:.75rem; flex-wrap:wrap; margin:1rem 0 1.25rem;">
     <button type="button" class="btn btn-secondary" id="show-contact">Contact us</button>
@@ -672,9 +667,6 @@
   <!-- CONTACT PANEL (NEW FORM)  -->
   <!-- ========================= -->
   <div id="contact-panel" hidden>
-    <h2>Contact us</h2>
-    <p>Send us a quick message and we’ll get back to you.</p>
-
     <form id="contact-form"
           name="contact"
           method="POST"
@@ -737,9 +729,6 @@
         btnContact?.classList.add('active');
         btnDemo?.classList.remove('active');
       }
-
-      btnDemo?.addEventListener('click', showDemo);
-      btnContact?.addEventListener('click', showContact);
 
       // Default view
       showDemo();
