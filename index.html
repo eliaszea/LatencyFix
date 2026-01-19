@@ -815,7 +815,25 @@
       }
     
       // Helper to x-www-form-urlencoded encode for Netlify Forms
-      const encode = (obj) => new URLSearchParams(obj).toString();
+      const encodeFD = (fd) => {
+        const params = new URLSearchParams();
+        for (const [k, v] of fd.entries()) params.append(k, v);
+        return params.toString();
+      };
+
+      // FormData -> JSON-safe object, preserving repeated keys as arrays
+      const formDataToJSON = (fd) => {
+        const out = {};
+        for (const [k, v] of fd.entries()) {
+          if (k in out) {
+            if (Array.isArray(out[k])) out[k].push(v);
+            else out[k] = [out[k], v];
+          } else {
+            out[k] = v;
+          }
+        }
+        return out;
+      };
     
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -836,17 +854,22 @@
     
           // 1) STORE in Netlify Forms (so you can export CSV later)
           // POST to current page "/" with x-www-form-urlencoded body as per Netlify docs
-          await fetch('/', {
+          const store = await fetch('/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: encode(Object.fromEntries(fd))
+            body: encodeFD(fd),
           });
+
+          if (!store.ok) {
+            throw new Error(`Netlify form store failed (${store.status})`);
+          }
     
           // 2) EMAIL via your Netlify Function (secure link)
+          const payload = formDataToJSON(fd);
           const res = await fetch('/.netlify/functions/send-demo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(Object.fromEntries(fd))
+            body: JSON.stringify(payload),
           });
     
           if (res.ok) {
