@@ -7,7 +7,7 @@
   <title>LatencyFix – Real-time sync for analog and digital sound systems</title>
   <style>
     :root {
-      --bg-color: #0d0d0b;
+      --bg-color: #000000;
       --text-color: #ffffff;
       --secondary-color: #bbbbbb;
       --section-bg: #2a2a2a;
@@ -411,7 +411,7 @@
     <div class="features">
       <div class="feature">
         <h3>Plugin-based solution</h3>
-        <p>Works inside any DAW and standalone. Install and sync automatically – no hardware required.</p>
+        <p>DAW-based and standalone version. Install and sync automatically – no hardware required.</p>
       </div>
       <div class="feature">
         <h3>AI-powered sync</h3>
@@ -455,7 +455,7 @@
           <ul>
             <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
             <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
-            <li><strong>Processor:</strong> Intel i5 or Apple Silicon equivalent (2 GHz or higher)</li>
+            <li><strong>Processor:</strong> Intel & Apple Silicon (2 GHz or higher)</li>
             <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
             <li><strong>Disk space:</strong> 13.1 MB</li>
             <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
@@ -518,7 +518,11 @@
   <!-- DEMO PANEL (UNCHANGED FORM) -->
   <!-- ========================= -->
   <div id="demo-panel" class="panel">
-    <form id="beta-form" name="beta-signup" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
+    <form id="beta-form" 
+          name="beta-signup" 
+          method="POST" 
+          data-netlify="true" 
+          netlify-honeypot="bot-field">
       
       <!-- Netlify Forms requires this hidden form-name field -->
       <input type="hidden" name="form-name" value="beta-signup">
@@ -658,8 +662,6 @@
         <input type="checkbox" name="consent" value="yes" required>
         I agree to be contacted about the LatencyFix beta and downloads.
       </label>
-
-      <div data-netlify-recaptcha="true"></div>
       
       <button type="submit">Submit</button>
     </form>
