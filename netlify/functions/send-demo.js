@@ -65,7 +65,7 @@ export default async (req) => {
     <p>Thanks for requesting access to the <strong>${BRAND_NAME}</strong> demo.</p>
     <p>
       <a href="${downloadURL}" style="background:#9dbba7;color:#000;padding:10px 14px;border-radius:6px;text-decoration:none;display:inline-block">
-        Download your demo
+        Download the LatencyFix Demo Starter Kit (ZIP)
       </a><br/>
       <small>This link expires in ${ttlHours} hours.</small>
     </p>
