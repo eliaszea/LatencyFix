@@ -321,6 +321,19 @@
     .requirements li {
       margin-bottom: .4rem;
     }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
     
     /* Gate panel */
     .download-panel {
@@ -493,25 +506,27 @@
 
   <!-- System Requirements -->
   <section class="section">
-    <div class="requirements">
-      <h2>System requirements</h2>
-      <ul>
-        <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
-        <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
-        <li><strong>Processor:</strong> Intel & Apple Silicon (2 GHz or higher)</li>
-        <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
-        <li><strong>Disk space:</strong> 13.1 MB</li>
-        <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
-      </ul>
+    <div class="specs-grid">
+      <div>
+        <h2>System requirements</h2>
+        <ul>
+          <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
+          <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
+          <li><strong>Processor:</strong> Intel & Apple Silicon (2 GHz or higher)</li>
+          <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
+          <li><strong>Disk space:</strong> 13.1 MB</li>
+          <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
+        </ul>
+      </div>
   
-      <h2>Technical specifications</h2>
-      <ul>
-        <li><strong>Plugin formats:</strong> VST 3, AAX, AU, RTAS</li>
-        <li><strong>Sample rates:</strong> up to 192 kHz</li>
-        <li><strong>Bit depth:</strong> 64 bits (floating point)</li>
-        <li><strong>Channels:</strong> mono and stereo</li>
-        <li><strong>Precision:</strong> &lt; 20 &micro;s</li>
-      </ul>
+        <h2>Technical specifications</h2>
+        <ul>
+          <li><strong>Plugin formats:</strong> VST 3, AAX, AU, RTAS</li>
+          <li><strong>Sample rates:</strong> up to 192 kHz</li>
+          <li><strong>Bit depth:</strong> 64 bits (floating point)</li>
+          <li><strong>Channels:</strong> mono and stereo</li>
+        </ul>
+      </div>
     </div>
   </section>
   
