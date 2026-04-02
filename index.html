@@ -382,6 +382,25 @@
       border-radius: 12px;
     }
 
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .video-card h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+    }
+    
+    .video-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      border-radius: 12px;
+    }
+
     /* Panels: don't use [hidden] for reCAPTCHA areas; collapse instead */
     .panel {
       max-height: 5000px;        /* big enough for your long demo form */
@@ -427,8 +446,8 @@
     <h2>Key Features</h2>
     <div class="features">
        <div class="feature">
-        <h3>Plugin-based solution</h3>
-        <p>Standalone and DAW-based. Ready for outboard gear, studio, live, and remote sessions.</p>
+        <h3>Software-based</h3>
+        <p>Standalone and plugin solutions. Ready for outboard gear, studio, live, and remote sessions.</p>
       </div>
       <div class="feature">
         <h3>Data-driven sync</h3>
@@ -447,52 +466,52 @@
 
   <section class="section">
     <h2>LatencyFix in action</h2>
-    <p>Watch this quick demo to see how our plugin synchronizes latency.</p>
+    <p>Watch these quick demos to see LatencyFix Standalone and Remote.</p>
   
-    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-      <iframe
-        src="https://www.youtube.com/embed/S7L7enJD5Gk"
-        title="LatencyFix demo"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-      </iframe>
+    <div class="video-grid">
+      <div class="video-card">
+        <h3>Standalone demo</h3>
+        <iframe
+          src="https://www.youtube.com/embed/8uz1QPhjWAo"
+          title="Standalone demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+  
+      <div class="video-card">
+        <h3>Remote demo</h3>
+        <iframe
+          src="https://www.youtube.com/embed/S7L7enJD5Gk"
+          title="Remote demo"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
     </div>
   </section>
 
-  <!-- Screenshots + System Requirements -->
+  <!-- System Requirements -->
   <section class="section">
-    <div class="showcase">
-      <!-- Left: slideshow -->
-      <div class="showcase-left">
-        <div class="slideshow">
-          <img src="pic-ping-send.jpg" alt="LatencyFix screenshot 1">
-          <img src="pic-ping-receive.jpg" alt="LatencyFix screenshot 2">
-          <img src="pic-nudge.jpg" alt="LatencyFix screenshot 3">
-        </div>
-      </div>
+    <div class="requirements">
+      <h2>System requirements</h2>
+      <ul>
+        <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
+        <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
+        <li><strong>Processor:</strong> Intel & Apple Silicon (2 GHz or higher)</li>
+        <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
+        <li><strong>Disk space:</strong> 13.1 MB</li>
+        <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
+      </ul>
   
-      <!-- Right: system requirements -->
-      <div class="showcase-right requirements">
-        <h2>System requirements</h2>
-          <ul>
-            <li><strong>Operating system:</strong> macOS 10.6 or newer</li>
-            <li><strong>DAW:</strong> Avid Pro Tools (2022.12 or later). Multi-DAW roadmap.</li>
-            <li><strong>Processor:</strong> Intel & Apple Silicon (2 GHz or higher)</li>
-            <li><strong>RAM:</strong> 8 GB minimum (16 GB recommended)</li>
-            <li><strong>Disk space:</strong> 13.1 MB</li>
-            <li><strong>Audio interface:</strong> ASIO or Core Audio compatible</li>
-          </ul>
-        <h2>Technical specifications</h2>
-        <ul>
-          <li><strong>Plugin formats:</strong> VST 2.4/3, AAX, AU, RTAS</li>
-          <li><strong>Sample rates:</strong> up to 192 kHz</li>
-          <li><strong>Bit depth:</strong> 64 bits (floating point)</li>
-          <li><strong>Channels:</strong> mono and stereo</li>
-          <li><strong>Precision:</strong> &lt; 20 &micro;s</li>
-        </ul>
-      </div>
+      <h2>Technical specifications</h2>
+      <ul>
+        <li><strong>Plugin formats:</strong> VST 3, AAX, AU, RTAS</li>
+        <li><strong>Sample rates:</strong> up to 192 kHz</li>
+        <li><strong>Bit depth:</strong> 64 bits (floating point)</li>
+        <li><strong>Channels:</strong> mono and stereo</li>
+        <li><strong>Precision:</strong> &lt; 20 &micro;s</li>
+      </ul>
     </div>
   </section>
   
@@ -516,7 +535,7 @@
       <div class="team-member">
           <img src="Team-Daniel.jpeg" alt="Daniel De Sousa">
         <h3>Daniel De Sousa, CFO</h3>
-        <p>Co-Founder / Business & Commercial Lead</p>
+        <p>Founder / Business & Commercial Lead</p>
         <p>Music Business & Consultancy</p>
       </div>
       <div class="team-member">
